@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>348313600026-ic11qkgq973ns06v21tfhvqmqtpts665.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.348313600026-ic11qkgq973ns06v21tfhvqmqtpts665</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA5vmEytsl3MqpWvll4rumdFymFRX5ihx4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>348313600026</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pony.logitstics.ponyLogistics</string>
+	<key>PROJECT_ID</key>
+	<string>pony-logistics</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pony-logistics.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:348313600026:ios:6f5a249c7404a7f23991a3</string>
+</dict>
+</plist>
