@@ -1,46 +1,11 @@
 {
   "project_info": {
     "project_number": "348313600026",
+    "firebase_url": "https://pony-logistics-default-rtdb.firebaseio.com",
     "project_id": "pony-logistics",
     "storage_bucket": "pony-logistics.appspot.com"
   },
   "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:348313600026:android:cb9d2c2ba1c1eb9c3991a3",
-        "android_client_info": {
-          "package_name": "com.codingwitht.login_flutter_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "348313600026-d1ksvlfkkha2sh624qqcq43qm361uj1q.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAg9KXa-uLM-1fe8glR-lAAvq44cq3spPc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "348313600026-d1ksvlfkkha2sh624qqcq43qm361uj1q.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "348313600026-ic11qkgq973ns06v21tfhvqmqtpts665.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.pony.logitstics.ponyLogistics"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:348313600026:android:cc7b5e8d013b07ef3991a3",

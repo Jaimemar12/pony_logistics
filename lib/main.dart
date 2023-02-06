@@ -12,7 +12,7 @@ import 'package:pony_logistics/src/utils/theme/theme.dart';
 /// FIREBASE PLAYLIST : https://www.youtube.com/playlist?list=PL5jb9EteFAOC9V6ZHAIg3ycLtjURdVxUH
 /// For the Firebase setup You can watch this video - https://www.youtube.com/watch?v=fxDusoMcWj8
 
-void main() {
+Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   /// Show Splash Screen till data loads & when load call FlutterNativeSplash.remove();
   /// In this case I'm removing it inside AuthenticationRepository() -> onReady() method.
@@ -20,7 +20,7 @@ void main() {
 
   /// Before running App - Initialize Firebase and after initialization call
   /// Authentication Repository so that It can check which screen to show.
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) => Get.put(AuthenticationRepository()));
 
   runApp(const App());

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 
-import '../../features/core/screens/dashboard/dashboard.dart';
-
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
 
