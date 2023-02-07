@@ -16,9 +16,9 @@ class AuthenticationRepository extends GetxController {
   var verificationId = ''.obs;
 
   /// QUICK links to get frequently used values in other classes.
-  String? get getUserID  => firebaseUser.value?.uid;
-  String? get getUserEmail  => firebaseUser.value?.email;
-  String? get getUserPhoneNo  => firebaseUser.value?.phoneNumber;
+  String? get getUserID => firebaseUser.value?.uid;
+  String? get getUserEmail => firebaseUser.value?.email;
+  String? get getUserPhoneNo => firebaseUser.value?.phoneNumber;
 
   /// App launches & this func will be called and set the firebaseUser state & remove the Splash Screen
   @override
@@ -31,7 +31,9 @@ class AuthenticationRepository extends GetxController {
 
   /// Setting initial screen onLOAD (optional)
   _setInitialScreen(User? user) {
-    user == null ? Get.offAll(() => const WelcomeScreen()) : Get.offAll(() => const Dashboard());
+    user == null
+        ? Get.offAll(() => const WelcomeScreen())
+        : Get.offAll(() => const Dashboard());
   }
 
   /// Phone Authentication - LOGIN
@@ -40,10 +42,12 @@ class AuthenticationRepository extends GetxController {
       await _auth.signInWithPhoneNumber(phoneNumber);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-phone-number') {
-        Get.snackbar("Error", "Invalid Phone No");
+        Get.snackbar("Error", "Invalid Phone No",
+            duration: const Duration(seconds: 2));
       }
     } catch (_) {
-      Get.snackbar("Error", "Something went wrong.");
+      Get.snackbar("Error", "Something went wrong.",
+          duration: const Duration(seconds: 2));
     }
   }
 
@@ -62,9 +66,11 @@ class AuthenticationRepository extends GetxController {
       },
       verificationFailed: (e) {
         if (e.code == 'invalid-phone-number') {
-          Get.snackbar('Error', 'The provided phone number is not valid.');
+          Get.snackbar('Error', 'The provided phone number is not valid.',
+              duration: const Duration(seconds: 2));
         } else {
-          Get.snackbar('Error', 'Something went wrong. Try again.');
+          Get.snackbar('Error', 'Something went wrong. Try again.',
+              duration: const Duration(seconds: 2));
         }
       },
     );
@@ -72,16 +78,15 @@ class AuthenticationRepository extends GetxController {
 
   /// Phone Authentication - VERIFY PHONE NO BY OTP
   Future<bool> verifyOTP(String otp) async {
-    var credentials = await _auth
-        .signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId.value, smsCode: otp));
+    var credentials = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            verificationId: verificationId.value, smsCode: otp));
     return credentials.user != null ? true : false;
   }
 
-
-
-
   /// Email Authentication - LOGIN
-  Future<String?> loginWithEmailAndPassword(String email, String password) async {
+  Future<String?> loginWithEmailAndPassword(
+      String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -93,11 +98,16 @@ class AuthenticationRepository extends GetxController {
     }
     return null;
   }
+
   /// Email Authentication - REGISTER
-  Future<String?> createUserWithEmailAndPassword(String email, String password) async {
+  Future<String?> createUserWithEmailAndPassword(
+      String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      firebaseUser.value != null ? Get.offAll(() => const Dashboard()) : Get.to(() => const WelcomeScreen());
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      firebaseUser.value != null
+          ? Get.offAll(() => const Dashboard())
+          : Get.to(() => const WelcomeScreen());
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
       return ex.message;

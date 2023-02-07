@@ -7,9 +7,8 @@ import '../../../constants/sizes.dart';
 class TOutlinedButtonTheme {
   TOutlinedButtonTheme._(); //To avoid creating instances
 
-
   /* -- Light Theme -- */
-  static final lightOutlinedButtonTheme  = OutlinedButtonThemeData(
+  static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       foregroundColor: tSecondaryColor,
       side: const BorderSide(color: tSecondaryColor),

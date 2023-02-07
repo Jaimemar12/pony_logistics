@@ -26,22 +26,29 @@ class SignUpFormWidget extends StatelessWidget {
           children: [
             TextFormField(
               controller: controller.fullName,
-              decoration: const InputDecoration(label: Text(tFullName), prefixIcon: Icon(LineAwesomeIcons.user)),
+              decoration: const InputDecoration(
+                  label: Text(tFullName),
+                  prefixIcon: Icon(LineAwesomeIcons.user)),
             ),
             const SizedBox(height: tFormHeight - 20),
             TextFormField(
               controller: controller.email,
-              decoration: const InputDecoration(label: Text(tEmail), prefixIcon: Icon(LineAwesomeIcons.envelope)),
+              decoration: const InputDecoration(
+                  label: Text(tEmail),
+                  prefixIcon: Icon(LineAwesomeIcons.envelope)),
             ),
             const SizedBox(height: tFormHeight - 20),
             TextFormField(
               controller: controller.phoneNo,
-              decoration: const InputDecoration(label: Text(tPhoneNo), prefixIcon: Icon(LineAwesomeIcons.phone)),
+              decoration: const InputDecoration(
+                  label: Text(tPhoneNo),
+                  prefixIcon: Icon(LineAwesomeIcons.phone)),
             ),
             const SizedBox(height: tFormHeight - 20),
             TextFormField(
               controller: controller.password,
-              decoration: const InputDecoration(label: Text(tPassword), prefixIcon: Icon(Icons.fingerprint)),
+              decoration: const InputDecoration(
+                  label: Text(tPassword), prefixIcon: Icon(Icons.fingerprint)),
             ),
             const SizedBox(height: tFormHeight - 10),
             SizedBox(

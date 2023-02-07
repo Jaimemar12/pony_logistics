@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/firebase_options.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:pony_logistics/src/utils/theme/theme.dart';
-
 
 /// NOTE:
 /// DESIGN PLAYLIST : https://www.youtube.com/playlist?list=PL5jb9EteFAODpfNJu8U2CMqKFp4NaXlto
@@ -14,6 +14,9 @@ import 'package:pony_logistics/src/utils/theme/theme.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   /// Show Splash Screen till data loads & when load call FlutterNativeSplash.remove();
   /// In this case I'm removing it inside AuthenticationRepository() -> onReady() method.
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -39,6 +42,7 @@ class App extends StatelessWidget {
       defaultTransition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
       home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+
       /// Show Progress Indicator OR SPLASH SCREEN until Screen Loads all its data from cloud.
       /// Let the AuthenticationRepository decide which screen to appear as first.
     );

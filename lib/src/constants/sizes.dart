@@ -1,5 +1,3 @@
-
-
 //App default Sizing
 const tDefaultSize = 20.0;
 const tSplashContainerSize = 30.0;

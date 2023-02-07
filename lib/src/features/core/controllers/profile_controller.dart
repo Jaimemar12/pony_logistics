@@ -17,7 +17,8 @@ class ProfileController extends GetxController {
     if (currentUserEmail != null) {
       return _userRepo.getUserDetails(currentUserEmail);
     } else {
-      Get.snackbar("Error", "Login to continue");
+      Get.snackbar("Error", "Login to continue",
+          duration: const Duration(seconds: 2));
     }
   }
 
@@ -33,10 +34,12 @@ class ProfileController extends GetxController {
   Future<void> deleteUser() async {
     final uID = _authRepo.getUserID;
     if (uID == null) {
-      Get.snackbar("Error", "User cannot be deleted.");
+      Get.snackbar("Error", "User cannot be deleted.",
+          duration: const Duration(seconds: 2));
     } else {
       await _userRepo.deleteUser(uID);
-      Get.snackbar("Success", "Account has been deleted.");
+      Get.snackbar("Success", "Account has been deleted.",
+          duration: const Duration(seconds: 2));
       // You can call your redirection to other screen here...
       // OR call the LOGOUT() function.
     }

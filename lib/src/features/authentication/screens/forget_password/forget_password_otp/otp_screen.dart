@@ -20,11 +20,14 @@ class OTPScreen extends StatelessWidget {
           children: [
             Text(
               tOtpTitle,
-              style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 80.0),
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.bold, fontSize: 80.0),
             ),
-            Text(tOtpSubTitle.toUpperCase(), style: Theme.of(context).textTheme.headline6),
+            Text(tOtpSubTitle.toUpperCase(),
+                style: Theme.of(context).textTheme.headline6),
             const SizedBox(height: 40.0),
-            const Text("$tOtpMessage support@codingwitht.com", textAlign: TextAlign.center),
+            const Text("$tOtpMessage support@codingwitht.com",
+                textAlign: TextAlign.center),
             const SizedBox(height: 20.0),
             OtpTextField(
                 mainAxisAlignment: MainAxisAlignment.center,

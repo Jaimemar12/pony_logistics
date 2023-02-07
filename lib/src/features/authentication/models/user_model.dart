@@ -9,7 +9,11 @@ class UserModel {
 
   /// Constructor
   const UserModel(
-      {this.id, required this.email, required this.password, required this.fullName, required this.phoneNo});
+      {this.id,
+      required this.email,
+      required this.password,
+      required this.fullName,
+      required this.phoneNo});
 
   /// convert model to Json structure so that you can it to store data in Firesbase
   toJson() {
@@ -22,7 +26,8 @@ class UserModel {
   }
 
   /// Map Json oriented document snapshot from Firebase to UserModel
-  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  factory UserModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
     return UserModel(
       id: document.id,

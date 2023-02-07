@@ -21,22 +21,11 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      leading: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
+      leading: IconButton(
+          onPressed: () => Get.to(() => const ProfileScreen()),
+          icon: const Icon(Icons.menu),
+          color: isDark ? tWhiteColor : tDarkColor),
       title: Text(tAppName, style: Theme.of(context).textTheme.headline4),
-      actions: [
-        Container(
-          margin: const EdgeInsets.only(right: 20, top: 7),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: isDark ? tSecondaryColor : tCardBgColor,
-          ),
-          child: IconButton(
-            onPressed: () => Get.to(() => const ProfileScreen()),
-            // onPressed: () => AuthenticationRepository.instance.logout(),
-            icon: const Image(image: AssetImage(tUserProfileImage)),
-          ),
-        )
-      ],
     );
   }
 

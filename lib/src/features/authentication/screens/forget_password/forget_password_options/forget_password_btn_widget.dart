@@ -16,9 +16,9 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //Use for Dark Theme
-    final bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final bool isDark =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return GestureDetector(
       onTap: onTap,

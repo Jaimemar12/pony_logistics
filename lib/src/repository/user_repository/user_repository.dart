@@ -8,29 +8,28 @@ class UserRepository extends GetxController {
 
   final _db = FirebaseFirestore.instance;
 
-
   /// Store user data
   Future<void> createUser(UserModel user) async {
     await _db.collection("Users").add(user.toJson()).whenComplete(() {
-      Get.snackbar(
-        "Success",
-        "You account has been created.",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.withOpacity(0.1),
-        colorText: Colors.green,
-      );
+      Get.snackbar("Success", "You account has been created.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.withOpacity(0.1),
+          colorText: Colors.green,
+          duration: const Duration(seconds: 2));
     }).catchError((error, stackTrace) {
       Get.snackbar("Error", "Something went wrong. Try again",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
-          colorText: Colors.red);
+          colorText: Colors.red,
+          duration: const Duration(seconds: 2));
       print("ERROR - $error");
     });
   }
 
   /// Fetch User Specific details
   Future<UserModel> getUserDetails(String email) async {
-    final snapshot = await _db.collection("Users").where("Email", isEqualTo: email).get();
+    final snapshot =
+        await _db.collection("Users").where("Email", isEqualTo: email).get();
     final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
     return userData;
   }
@@ -38,7 +37,8 @@ class UserRepository extends GetxController {
   /// Fetch All Users
   Future<List<UserModel>> allUsers() async {
     final snapshot = await _db.collection("Users").get();
-    final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
+    final userData =
+        snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
     return userData;
   }
 

@@ -28,7 +28,9 @@ class LoginFormWidget extends StatelessWidget {
               TextFormField(
                 controller: controller.email,
                 decoration: const InputDecoration(
-                    prefixIcon: Icon(LineAwesomeIcons.user), labelText: tEmail, hintText: tEmail),
+                    prefixIcon: Icon(LineAwesomeIcons.user),
+                    labelText: tEmail,
+                    hintText: tEmail),
               ),
               const SizedBox(height: tFormHeight - 20),
               TextFormField(
@@ -46,7 +48,8 @@ class LoginFormWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () => ForgetPasswordScreen.buildShowModalBottomSheet(context),
+                  onPressed: () =>
+                      ForgetPasswordScreen.buildShowModalBottomSheet(context),
                   child: const Text(tForgetPassword),
                 ),
               ),
@@ -57,7 +60,9 @@ class LoginFormWidget extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      LoginController.instance.loginUser(controller.email.text.trim(), controller.password.text.trim());
+                      LoginController.instance.loginUser(
+                          controller.email.text.trim(),
+                          controller.password.text.trim());
                     }
                   },
                   child: Text(tLogin.toUpperCase()),

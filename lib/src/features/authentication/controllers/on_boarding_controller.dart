@@ -6,16 +6,17 @@ import '../../../constants/text_strings.dart';
 import '../models/model_on_boarding.dart';
 import '../screens/on_boarding/on_boarding_page_widget.dart';
 
-class OnBoardingController extends GetxController{
-
+class OnBoardingController extends GetxController {
   //Variables
   final controller = LiquidController();
   RxInt currentPage = 0.obs;
 
   //Functions to trigger Skip, Next and onPageChange Events
   skip() => controller.jumpToPage(page: 2);
-  animateToNextSlide() => controller.animateToPage(page: controller.currentPage + 1);
-  onPageChangedCallback(int activePageIndex) => currentPage.value = activePageIndex;
+  animateToNextSlide() =>
+      controller.animateToPage(page: controller.currentPage + 1);
+  onPageChangedCallback(int activePageIndex) =>
+      currentPage.value = activePageIndex;
 
   //Three Onboarding Pages
   final pages = [

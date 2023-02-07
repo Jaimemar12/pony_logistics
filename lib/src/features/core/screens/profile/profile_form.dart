@@ -8,7 +8,6 @@ import '../../../../constants/text_strings.dart';
 import '../../../authentication/models/user_model.dart';
 import '../../controllers/profile_controller.dart';
 
-
 class ProfileFormScreen extends StatelessWidget {
   const ProfileFormScreen({
     Key? key,
@@ -27,7 +26,6 @@ class ProfileFormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(ProfileController());
 
     return Form(
@@ -35,17 +33,23 @@ class ProfileFormScreen extends StatelessWidget {
         children: [
           TextFormField(
             controller: fullName,
-            decoration: const InputDecoration(label: Text(tFullName), prefixIcon: Icon(LineAwesomeIcons.user)),
+            decoration: const InputDecoration(
+                label: Text(tFullName),
+                prefixIcon: Icon(LineAwesomeIcons.user)),
           ),
           const SizedBox(height: tFormHeight - 20),
           TextFormField(
             controller: email,
-            decoration: const InputDecoration(label: Text(tEmail), prefixIcon: Icon(LineAwesomeIcons.envelope_1)),
+            decoration: const InputDecoration(
+                label: Text(tEmail),
+                prefixIcon: Icon(LineAwesomeIcons.envelope_1)),
           ),
           const SizedBox(height: tFormHeight - 20),
           TextFormField(
             controller: phoneNo,
-            decoration: const InputDecoration(label: Text(tPhoneNo), prefixIcon: Icon(LineAwesomeIcons.phone)),
+            decoration: const InputDecoration(
+                label: Text(tPhoneNo),
+                prefixIcon: Icon(LineAwesomeIcons.phone)),
           ),
           const SizedBox(height: tFormHeight - 20),
           TextFormField(
@@ -54,7 +58,9 @@ class ProfileFormScreen extends StatelessWidget {
             decoration: InputDecoration(
               label: const Text(tPassword),
               prefixIcon: const Icon(Icons.fingerprint),
-              suffixIcon: IconButton(icon: const Icon(LineAwesomeIcons.eye_slash), onPressed: () {}),
+              suffixIcon: IconButton(
+                  icon: const Icon(LineAwesomeIcons.eye_slash),
+                  onPressed: () {}),
             ),
           ),
           const SizedBox(height: tFormHeight),
@@ -75,8 +81,11 @@ class ProfileFormScreen extends StatelessWidget {
                 await controller.updateRecord(userData);
               },
               style: ElevatedButton.styleFrom(
-                  backgroundColor: tPrimaryColor, side: BorderSide.none, shape: const StadiumBorder()),
-              child: const Text(tEditProfile, style: TextStyle(color: tDarkColor)),
+                  backgroundColor: tPrimaryColor,
+                  side: BorderSide.none,
+                  shape: const StadiumBorder()),
+              child:
+                  const Text(tEditProfile, style: TextStyle(color: tDarkColor)),
             ),
           ),
           const SizedBox(height: tFormHeight),
@@ -89,7 +98,12 @@ class ProfileFormScreen extends StatelessWidget {
                 TextSpan(
                   text: tJoined,
                   style: TextStyle(fontSize: 12),
-                  children: [TextSpan(text: tJoinedAt, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12))],
+                  children: [
+                    TextSpan(
+                        text: tJoinedAt,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 12))
+                  ],
                 ),
               ),
               ElevatedButton(

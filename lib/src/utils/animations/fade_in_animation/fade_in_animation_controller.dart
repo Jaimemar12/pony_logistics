@@ -13,7 +13,8 @@ class FadeInAnimationController extends GetxController {
     await Future.delayed(const Duration(milliseconds: 3000));
     animateTwoWay.value = false;
     await Future.delayed(const Duration(milliseconds: 2000));
-    Get.off( // Get.off Instead of Get.offAll()
+    Get.off(
+      // Get.off Instead of Get.offAll()
       () => const WelcomeScreen(),
       duration: const Duration(milliseconds: 1000), //Transition Time
       transition: Transition.fadeIn, //Screen Switch Transition

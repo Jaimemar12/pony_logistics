@@ -49,8 +49,7 @@ class ForgetPasswordPhoneScreen extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                            onPressed: () {},
-                            child: const Text(tNext)),
+                            onPressed: () {}, child: const Text(tNext)),
                       ),
                     ],
                   ),

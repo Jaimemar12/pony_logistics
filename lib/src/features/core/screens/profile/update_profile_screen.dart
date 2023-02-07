@@ -16,7 +16,9 @@ class UpdateProfileScreen extends StatelessWidget {
     final controller = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(LineAwesomeIcons.angle_left)),
         title: Text(tEditProfile, style: Theme.of(context).textTheme.headline4),
       ),
       body: SingleChildScrollView(
@@ -44,7 +46,12 @@ class UpdateProfileScreen extends StatelessWidget {
                       const SizedBox(height: 50),
 
                       /// -- Form (Get data and pass it to FormScreen)
-                      ProfileFormScreen(fullName: fullName, email: email, phoneNo: phoneNo, password: password, user: user),
+                      ProfileFormScreen(
+                          fullName: fullName,
+                          email: email,
+                          phoneNo: phoneNo,
+                          password: password,
+                          user: user),
                     ],
                   );
                 } else if (snapshot.hasError) {
@@ -62,4 +69,3 @@ class UpdateProfileScreen extends StatelessWidget {
     );
   }
 }
-
