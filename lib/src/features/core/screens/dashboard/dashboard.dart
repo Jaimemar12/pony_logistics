@@ -10,7 +10,7 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Variables
-    final txtTheme = Theme.of(context).textTheme;
+    // final txtTheme = Theme.of(context).textTheme;
     final isDark = MediaQuery.of(context).platformBrightness ==
         Brightness.dark; //Dark mode
 
@@ -32,7 +32,7 @@ class Dashboard extends StatelessWidget {
               //Search Box
               const TextFormWidget(),
               Text("Today's Packages",
-                  style: Theme.of(context).textTheme.headline4),
+                  style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 10.0),
               const TodayPackages(),
               // DashboardSearchBox(txtTheme: txtTheme),

@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:pony_logistics/src/repository/package_repository/package_repository.dart';
-import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
 
 class PackageController extends GetxController {
   static PackageController get instance => Get.find();
@@ -28,8 +25,8 @@ class PackageController extends GetxController {
   Future<List<PackageModel>> getAllPackages() async =>
       await _packageRepo.allPackages();
 
-  Future<List<PackageModel>> getTodaysPackages() async =>
-      await _packageRepo.todaysPackages();
+  Future<List<PackageModel>> getTodayPackages() async =>
+      await _packageRepo.todayPackages();
 
   /// Update Package Data
   updateRecord(PackageModel package) async {

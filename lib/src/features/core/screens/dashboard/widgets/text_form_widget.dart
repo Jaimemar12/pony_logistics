@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
-import '../../../../authentication/models/user_model.dart';
 import '../../../controllers/text_controller.dart';
 import '../../../models/dashboard/package_model.dart';
 
@@ -48,7 +45,7 @@ class _TextFormWidget extends State<TextFormWidget> {
               ],
               decoration: InputDecoration(
                   label: const Text(tPartNumber),
-                  prefixIcon: const Icon(LineAwesomeIcons.user),
+                  prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   focusedBorder: OutlineInputBorder(
@@ -66,7 +63,7 @@ class _TextFormWidget extends State<TextFormWidget> {
               ],
               decoration: InputDecoration(
                   label: const Text(tCaseNumber),
-                  prefixIcon: const Icon(LineAwesomeIcons.envelope),
+                  prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   focusedBorder: OutlineInputBorder(
@@ -84,7 +81,7 @@ class _TextFormWidget extends State<TextFormWidget> {
               ],
               decoration: InputDecoration(
                   label: const Text(tQuantity),
-                  prefixIcon: const Icon(LineAwesomeIcons.phone),
+                  prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   focusedBorder: OutlineInputBorder(
@@ -98,7 +95,7 @@ class _TextFormWidget extends State<TextFormWidget> {
               readOnly: true,
               decoration: InputDecoration(
                   label: const Text(tDateDelivered),
-                  prefixIcon: const Icon(Icons.fingerprint),
+                  prefixIcon: const Icon(Icons.calendar_today),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   focusedBorder: OutlineInputBorder(

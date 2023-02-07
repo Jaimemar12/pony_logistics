@@ -4,7 +4,6 @@ import 'package:pony_logistics/src/features/authentication/models/user_model.dar
 import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
 
 import '../../../repository/authentication_repository/authentication_repository.dart';
-import '../screens/forget_password/forget_password_otp/otp_screen.dart';
 
 class SignUpController extends GetxController {
   static SignUpController get instance => Get.find();

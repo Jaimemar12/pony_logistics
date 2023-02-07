@@ -27,7 +27,7 @@ class _TodayPackages extends State<TodayPackages> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<PackageModel>>(
-      future: controller.getTodaysPackages(),
+      future: controller.getTodayPackages(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {

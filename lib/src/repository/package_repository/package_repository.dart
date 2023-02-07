@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 
 class PackageRepository extends GetxController {
@@ -49,9 +48,8 @@ class PackageRepository extends GetxController {
     return packageData;
   }
 
-  Future<List<PackageModel>> todaysPackages() async {
-    final DateTime dateTime = new DateTime.now();
-    print(DateFormat('MM-dd-yyyy').format(dateTime));
+  Future<List<PackageModel>> todayPackages() async {
+    final DateTime dateTime = DateTime.now();
     final snapshot = await _db
         .collection("Packages")
         .where('DateDelivered',

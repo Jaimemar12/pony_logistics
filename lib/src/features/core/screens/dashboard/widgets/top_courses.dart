@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../constants/colors.dart';
-import '../../../../../constants/image_strings.dart';
 import '../../../../../constants/sizes.dart';
 import '../../../models/dashboard/courses_model.dart';
 
@@ -47,7 +46,7 @@ class DashboardTopCourses extends StatelessWidget {
                         Flexible(
                           child: Text(
                             list[index].title,
-                            style: txtTheme.headline4,
+                            style: txtTheme.headlineMedium,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -72,12 +71,12 @@ class DashboardTopCourses extends StatelessWidget {
                           children: [
                             Text(
                               list[index].heading,
-                              style: txtTheme.headline4,
+                              style: txtTheme.headlineMedium,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               list[index].subHeading,
-                              style: txtTheme.bodyText2,
+                              style: txtTheme.bodyMedium,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],

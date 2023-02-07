@@ -3,7 +3,6 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
 import 'package:pony_logistics/src/constants/text_strings.dart';
-import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 import '../../../controllers/otp_controller.dart';
 
 class OTPScreen extends StatelessWidget {
@@ -24,7 +23,7 @@ class OTPScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold, fontSize: 80.0),
             ),
             Text(tOtpSubTitle.toUpperCase(),
-                style: Theme.of(context).textTheme.headline6),
+                style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 40.0),
             const Text("$tOtpMessage support@codingwitht.com",
                 textAlign: TextAlign.center),

@@ -22,7 +22,6 @@ class UserRepository extends GetxController {
           backgroundColor: Colors.redAccent.withOpacity(0.1),
           colorText: Colors.red,
           duration: const Duration(seconds: 2));
-      print("ERROR - $error");
     });
   }
 
@@ -45,7 +44,6 @@ class UserRepository extends GetxController {
   /// Update User details
   Future<void> updateUserRecord(UserModel user) async {
     await _db.collection("Users").doc(user.id).update(user.toJson());
-    print(user.id);
   }
 
   /// Delete User Data

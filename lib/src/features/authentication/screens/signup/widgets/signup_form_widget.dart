@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
-import 'package:pony_logistics/src/features/authentication/screens/forget_password/forget_password_otp/otp_screen.dart';
 import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
 import '../../../controllers/signup_controller.dart';

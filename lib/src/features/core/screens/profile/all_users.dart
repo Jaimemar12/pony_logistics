@@ -5,9 +5,7 @@ import 'package:pony_logistics/src/features/authentication/models/user_model.dar
 import 'package:pony_logistics/src/features/core/controllers/profile_controller.dart';
 
 import '../../../../constants/colors.dart';
-import '../../../../constants/image_strings.dart';
 import '../../../../constants/sizes.dart';
-import '../../../../constants/text_strings.dart';
 
 class AllUsers extends StatelessWidget {
   AllUsers({Key? key}) : super(key: key);
@@ -24,7 +22,7 @@ class AllUsers extends StatelessWidget {
             icon: const Icon(
               LineAwesomeIcons.angle_left,
             )),
-        title: Text("Users", style: Theme.of(context).textTheme.headline4),
+        title: Text("Users", style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -32,7 +30,7 @@ class AllUsers extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("All Users", style: Theme.of(context).textTheme.headline4),
+              Text("All Users", style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 20.0),
               FutureBuilder<List<UserModel>>(
                 future: controller.getAllUsers(),
@@ -41,7 +39,7 @@ class AllUsers extends StatelessWidget {
                     if (snapshot.hasData) {
                       return ListView.builder(
                           scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (c, index) {
@@ -71,7 +69,7 @@ class AllUsers extends StatelessWidget {
                                     title: Text(
                                       snapshot.data![index].fullName,
                                       style:
-                                          Theme.of(context).textTheme.headline4,
+                                          Theme.of(context).textTheme.headlineMedium,
                                     ),
                                     subtitle: Column(
                                       crossAxisAlignment:

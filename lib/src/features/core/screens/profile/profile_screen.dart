@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
         leading: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(LineAwesomeIcons.angle_left)),
-        title: Text(tProfile, style: Theme.of(context).textTheme.headline4),
+        title: Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
         actions: [
           IconButton(
               onPressed: () {},
@@ -46,9 +46,9 @@ class ProfileScreen extends StatelessWidget {
                         const ImageWithIcon(),
                         const SizedBox(height: 10),
                         Text(user.fullName.toUpperCase(),
-                            style: Theme.of(context).textTheme.headline4),
+                            style: Theme.of(context).textTheme.headlineMedium),
                         Text(user.email,
-                            style: Theme.of(context).textTheme.bodyText2),
+                            style: Theme.of(context).textTheme.bodyMedium),
                         const SizedBox(height: 20),
 
                         /// -- BUTTON

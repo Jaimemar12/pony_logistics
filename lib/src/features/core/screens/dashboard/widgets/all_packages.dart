@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
-import 'package:pony_logistics/src/features/core/controllers/profile_controller.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 
 import '../../../../../constants/colors.dart';
-import '../../../../../constants/sizes.dart';
 import '../../../controllers/package_controller.dart';
 
 class AllPackages extends StatefulWidget {

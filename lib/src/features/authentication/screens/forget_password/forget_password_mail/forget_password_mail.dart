@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:pony_logistics/src/constants/colors.dart';
 import 'package:pony_logistics/src/constants/image_strings.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
 import 'package:pony_logistics/src/constants/text_strings.dart';
-import 'package:pony_logistics/src/features/authentication/screens/forget_password/forget_password_otp/otp_screen.dart';
 import '../../../../../common_widgets/form/form_header_widget.dart';
 
 class ForgetPasswordMailScreen extends StatelessWidget {
