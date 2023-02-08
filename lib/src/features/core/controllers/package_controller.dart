@@ -11,10 +11,10 @@ class PackageController extends GetxController {
   final _packageRepo = Get.put(PackageRepository());
 
   /// Get User Email and pass to UserRepository to fetch user record.
-  getPackageData() {
+  getPackageData(String partNumber) {
     final currentUserEmail = _authRepo.getUserEmail;
     if (currentUserEmail != null) {
-      return _packageRepo.getPackageDetails(currentUserEmail);
+      return _packageRepo.getPackageDetails(partNumber);
     } else {
       Get.snackbar("Error", "Login to continue",
           duration: const Duration(seconds: 2));
@@ -28,23 +28,24 @@ class PackageController extends GetxController {
   Future<List<PackageModel>> getTodayPackages() async =>
       await _packageRepo.todayPackages();
 
+  Future<List<PackageModel>> getPackagesBetween(String startDate, String endDate) async =>
+      await _packageRepo.packagesBetween(startDate, endDate);
+
   /// Update Package Data
   updateRecord(PackageModel package) async {
     await _packageRepo.updatePackageRecord(package);
     //Show some message or redirect to other screen here...
   }
 
-  Future<void> deletePackage() async {
+  Future<void> deletePackage(PackageModel package) async {
     final uID = _authRepo.getUserID;
     if (uID == null) {
       Get.snackbar("Error", "Package cannot be deleted.",
           duration: const Duration(seconds: 2));
     } else {
-      await _packageRepo.deletePackage(uID);
+      await _packageRepo.deletePackage(package.id.toString());
       Get.snackbar("Success", "Package has been deleted.",
           duration: const Duration(seconds: 2));
-      // You can call your redirection to other screen here...
-      // OR call the LOGOUT() function.
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
+import 'package:pony_logistics/src/features/core/screens/packages/update_package_screen.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../controllers/package_controller.dart';
@@ -26,6 +27,9 @@ class _TodayPackages extends State<TodayPackages> {
 
   @override
   Widget build(BuildContext context) {
+    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    var iconColor = isDark ? tPrimaryColor : tAccentColor;
+
     return FutureBuilder<List<PackageModel>>(
       future: controller.getTodayPackages(),
       builder: (context, snapshot) {
@@ -55,12 +59,12 @@ class _TodayPackages extends State<TodayPackages> {
                             child: ListTile(
                               leading: Container(
                                 padding: const EdgeInsets.all(10.0),
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: tAccentColor,
+                                  color: iconColor.withOpacity(0.1),
                                 ),
-                                child: const Icon(LineAwesomeIcons.box,
-                                    color: Colors.black),
+                                child: Icon(LineAwesomeIcons.box,
+                                    color: iconColor),
                               ),
                               title: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,11 +85,17 @@ class _TodayPackages extends State<TodayPackages> {
                               ),
                               trailing: Container(
                                 padding: const EdgeInsets.all(1.0),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    LineAwesomeIcons.edit,
-                                    color: tAccentColor,
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: iconColor.withOpacity(0.1),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () => Get.to(() => UpdatePackageScreen(snapshot.data![index])),
+                                    icon: const Icon(LineAwesomeIcons.edit),
+                                    color: iconColor,
                                   ),
                                 ),
                               ),

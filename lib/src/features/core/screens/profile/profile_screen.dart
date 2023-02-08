@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
 import 'package:pony_logistics/src/constants/text_strings.dart';
+import 'package:pony_logistics/src/features/core/screens/packages/packages_screen.dart';
 import 'package:pony_logistics/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:pony_logistics/src/features/core/screens/profile/widgets/image_with_icon.dart';
 import 'package:pony_logistics/src/features/core/screens/profile/widgets/profile_menu.dart';
@@ -24,7 +25,8 @@ class ProfileScreen extends StatelessWidget {
         leading: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(LineAwesomeIcons.angle_left)),
-        title: Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
+        title: Text(tMainMenu.toUpperCase(),
+            style: Theme.of(context).textTheme.headlineMedium),
         actions: [
           IconButton(
               onPressed: () {},
@@ -43,8 +45,8 @@ class ProfileScreen extends StatelessWidget {
                     return Column(
                       children: [
                         /// -- IMAGE with ICON
-                        const ImageWithIcon(),
-                        const SizedBox(height: 10),
+                        // const ImageWithIcon(),
+                        // const SizedBox(height: 10),
                         Text(user.fullName.toUpperCase(),
                             style: Theme.of(context).textTheme.headlineMedium),
                         Text(user.email,
@@ -74,7 +76,10 @@ class ProfileScreen extends StatelessWidget {
                             title: "Settings",
                             icon: LineAwesomeIcons.cog,
                             onPress: () {}),
-                        // ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () {}),
+                        // ProfileMenuWidget(
+                        //     title: "Search Packages",
+                        //     icon: LineAwesomeIcons.search,
+                        //     onPress: () => Get.to(() => PackagesScreen())),
                         // ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () => Get.to(AllUsers())),
                         const Divider(),
                         const SizedBox(height: 10),

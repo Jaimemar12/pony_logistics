@@ -70,7 +70,7 @@ const String tOtpMessage = "Enter the verification code sent at ";
 // -- Dashboard Screen - Text
 // const String tDashboardTitle = "Hey, Coding with T";
 // const String tDashboardHeading = "Explore Courses";
-// const String tDashboardSearch = "Search...";
+const String tDashboardSearch = "Search Part Number";
 // const String tDashboardBannerTitle2 = "JAVA";
 // const String tDashboardButton = "View All";
 // const String tDashboardTopCourses = "Top Courses";
@@ -88,6 +88,10 @@ const String tEditProfile = "Edit Profile";
 const String tLogoutDialogHeading = "Logout";
 const String tProfileHeading = "Coding with T";
 const String tProfileSubHeading = "superAdmin@codingwitht.com";
+const String tMainMenu = "Main Menu";
+const String tEditPackage = "Edit Package";
+const String tUpdatePackage = "Update Package";
+const String tPackages = "Packages";
 // -- Menu
 const String tMenu5 = tLogout;
 const String tMenu1 = "Settings";

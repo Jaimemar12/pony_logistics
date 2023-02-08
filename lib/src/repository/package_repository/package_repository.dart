@@ -60,6 +60,18 @@ class PackageRepository extends GetxController {
     return packageData;
   }
 
+  Future<List<PackageModel>> packagesBetween(
+      String startDate, String endDate) async {
+    final snapshot = await _db
+        .collection("Packages")
+        .where('DateDelivered', isGreaterThanOrEqualTo: startDate)
+        .where('DateDelivered', isLessThanOrEqualTo: endDate)
+        .get();
+    final packageData =
+        snapshot.docs.map((e) => PackageModel.fromSnapshot(e)).toList();
+    return packageData;
+  }
+
   /// Update Package details
   Future<void> updatePackageRecord(PackageModel package) async {
     await _db.collection("Packages").doc(package.id).update(package.toJson());
