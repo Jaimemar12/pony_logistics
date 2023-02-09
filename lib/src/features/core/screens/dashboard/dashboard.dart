@@ -188,11 +188,13 @@ class _Dashboard extends State<Dashboard> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             final package = PackageModel(
-                                partNumber: textController.partNumber.text.trim(),
-                                caseNumber: textController.caseNumber.text.trim(),
+                                partNumber:
+                                    textController.partNumber.text.trim(),
+                                caseNumber:
+                                    textController.caseNumber.text.trim(),
                                 quantity: textController.quantity.text.trim(),
                                 dateDelivered:
-                                textController.dateReceived.text.trim());
+                                    textController.dateReceived.text.trim());
                             TextController.instance.createPackage(package);
                             setState(() {
                               textController.partNumber.text = "";
@@ -222,7 +224,10 @@ class _Dashboard extends State<Dashboard> {
                     color: iconColor.withOpacity(0.1),
                   ),
                   child: IconButton(
-                    onPressed: () => Get.to(() => const PackagesScreen()),
+                    onPressed: () => Get.to(
+                      () => const PackagesScreen(),
+                      transition: Transition.noTransition,
+                    ),
                     icon: const Icon(LineAwesomeIcons.search),
                     color: iconColor,
                   ),
@@ -298,9 +303,13 @@ class _Dashboard extends State<Dashboard> {
                                             color: iconColor.withOpacity(0.1),
                                           ),
                                           child: IconButton(
-                                            onPressed: () => Get.to(() =>
-                                                UpdatePackageScreen(package:
-                                                    snapshot.data![index])),
+                                            onPressed: () => Get.to(
+                                              () => UpdatePackageScreen(
+                                                  package:
+                                                      snapshot.data![index]),
+                                              transition:
+                                                  Transition.noTransition,
+                                            ),
                                             icon: const Icon(
                                                 LineAwesomeIcons.edit),
                                             color: iconColor,

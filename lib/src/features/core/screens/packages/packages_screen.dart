@@ -149,7 +149,9 @@ class _PackagesScreen extends State<PackagesScreen> {
               height: 10,
             ),
             FutureBuilder<List<PackageModel>>(
-              future: isFilter ? packageController.getPackagesBetween(startDate, endDate) : packageController.getPackages(partNumber),
+              future: isFilter
+                  ? packageController.getPackagesBetween(startDate, endDate)
+                  : packageController.getPackages(partNumber),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
@@ -216,9 +218,13 @@ class _PackagesScreen extends State<PackagesScreen> {
                                             color: iconColor.withOpacity(0.1),
                                           ),
                                           child: IconButton(
-                                            onPressed: () => Get.to(() =>
-                                                UpdatePackageScreen(package:
-                                                    snapshot.data![index])),
+                                            onPressed: () => Get.to(
+                                              () => UpdatePackageScreen(
+                                                  package:
+                                                      snapshot.data![index]),
+                                              transition:
+                                                  Transition.noTransition,
+                                            ),
                                             icon: const Icon(
                                                 LineAwesomeIcons.edit),
                                             color: iconColor,
@@ -241,7 +247,8 @@ class _PackagesScreen extends State<PackagesScreen> {
                     return const Center(child: Text('Something went wrong'));
                   }
                 } else {
-                  return const Center(child: SizedBox(child: CircularProgressIndicator()));
+                  return const Center(
+                      child: SizedBox(child: CircularProgressIndicator()));
                 }
               },
             ),

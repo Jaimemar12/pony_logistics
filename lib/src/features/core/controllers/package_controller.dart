@@ -28,7 +28,8 @@ class PackageController extends GetxController {
   Future<List<PackageModel>> getTodayPackages() async =>
       await _packageRepo.todayPackages();
 
-  Future<List<PackageModel>> getPackagesBetween(String startDate, String endDate) async =>
+  Future<List<PackageModel>> getPackagesBetween(
+          String startDate, String endDate) async =>
       await _packageRepo.packagesBetween(startDate, endDate);
 
   Future<List<PackageModel>> getPackages(String partNumber) async =>

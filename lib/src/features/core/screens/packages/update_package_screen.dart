@@ -12,7 +12,8 @@ import '../dashboard/dashboard.dart';
 
 class UpdatePackageScreen extends StatefulWidget {
   final PackageModel package;
-  const UpdatePackageScreen({Key? key, required this.package}) : super(key: key);
+  const UpdatePackageScreen({Key? key, required this.package})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -63,7 +64,8 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
               children: [
                 TextFormField(
                   controller: partNumber,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                   ],
@@ -71,15 +73,19 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                       label: const Text(tPartNumber),
                       prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
                       border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: textColor, width: 1.0))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(color: textColor, width: 1.0))),
                 ),
                 const SizedBox(height: tFormHeight - 20),
                 TextFormField(
                   controller: caseNumber,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                   ],
@@ -87,15 +93,19 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                       label: const Text(tCaseNumber),
                       prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
                       border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: textColor, width: 1.0))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(color: textColor, width: 1.0))),
                 ),
                 const SizedBox(height: tFormHeight - 20),
                 TextFormField(
                   controller: quantity,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                   ],
@@ -103,10 +113,13 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                       label: const Text(tQuantity),
                       prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
                       border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: textColor, width: 1.0))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(color: textColor, width: 1.0))),
                 ),
                 const SizedBox(height: tFormHeight - 20),
                 TextFormField(
@@ -116,10 +129,13 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                       label: const Text(tDateDelivered),
                       prefixIcon: const Icon(Icons.calendar_today),
                       border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: textColor, width: 1.0))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(color: textColor, width: 1.0))),
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
                         context: context,
@@ -128,7 +144,7 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                         lastDate: DateTime(2100));
                     if (pickedDate != null) {
                       String formattedDate =
-                      DateFormat('MM-dd-yyyy').format(pickedDate);
+                          DateFormat('MM-dd-yyyy').format(pickedDate);
                       setState(() {
                         dateDelivered.text =
                             formattedDate; //set output date to TextField value.
@@ -152,7 +168,10 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                       );
 
                       await controller.updateRecord(packageData);
-                      Get.to(() => const Dashboard());
+                      Get.to(
+                        () => const Dashboard(),
+                        transition: Transition.noTransition,
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: tPrimaryColor,
@@ -170,7 +189,10 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       await controller.deletePackage(package);
-                      Get.to(() => const Dashboard());
+                      Get.to(
+                        () => const Dashboard(),
+                        transition: Transition.noTransition,
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent.withOpacity(0.1),

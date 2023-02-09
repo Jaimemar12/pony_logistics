@@ -29,7 +29,8 @@ class OnBoardingScreen extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () => obController.animateToNextSlide(),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, side: const BorderSide(color: Colors.black26),
+                foregroundColor: Colors.white,
+                side: const BorderSide(color: Colors.black26),
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(20),
               ),

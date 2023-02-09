@@ -55,8 +55,10 @@ class MenuScreen extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: ElevatedButton(
-                            onPressed: () =>
-                                Get.to(() => const UpdateProfileScreen()),
+                            onPressed: () => Get.to(
+                              () => const UpdateProfileScreen(),
+                              transition: Transition.noTransition,
+                            ),
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: tPrimaryColor,
                                 side: BorderSide.none,

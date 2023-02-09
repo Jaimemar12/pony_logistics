@@ -23,7 +23,10 @@ class ForgetPasswordScreen {
             ForgetPasswordBtnWidget(
               onTap: () {
                 Navigator.pop(context);
-                Get.to(() => const ForgetPasswordMailScreen());
+                Get.to(
+                  () => const ForgetPasswordMailScreen(),
+                  transition: Transition.noTransition,
+                );
               },
               title: tEmail,
               subTitle: tResetViaEMail,

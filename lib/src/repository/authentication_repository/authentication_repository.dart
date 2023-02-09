@@ -32,8 +32,14 @@ class AuthenticationRepository extends GetxController {
   /// Setting initial screen onLOAD (optional)
   _setInitialScreen(User? user) {
     user == null
-        ? Get.offAll(() => const WelcomeScreen())
-        : Get.offAll(() => const Dashboard());
+        ? Get.offAll(
+            () => const WelcomeScreen(),
+            transition: Transition.noTransition,
+          )
+        : Get.offAll(
+            () => const Dashboard(),
+            transition: Transition.noTransition,
+          );
   }
 
   /// Phone Authentication - LOGIN
@@ -106,8 +112,14 @@ class AuthenticationRepository extends GetxController {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       firebaseUser.value != null
-          ? Get.offAll(() => const Dashboard())
-          : Get.to(() => const WelcomeScreen());
+          ? Get.offAll(
+              () => const Dashboard(),
+              transition: Transition.noTransition,
+            )
+          : Get.to(
+              () => const WelcomeScreen(),
+              transition: Transition.noTransition,
+            );
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
       return ex.message;

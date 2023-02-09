@@ -24,8 +24,8 @@ Future<void> main() async {
   /// Before running App - Initialize Firebase and after initialization call
   /// Authentication Repository so that It can check which screen to show.
   await Firebase.initializeApp(
-    name: 'pony-logistics',
-      options: DefaultFirebaseOptions.currentPlatform)
+          name: 'pony-logistics',
+          options: DefaultFirebaseOptions.currentPlatform)
       .then((value) => Get.put(AuthenticationRepository()));
 
   runApp(const App());
@@ -44,9 +44,6 @@ class App extends StatelessWidget {
       defaultTransition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
       home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-
-      /// Show Progress Indicator OR SPLASH SCREEN until Screen Loads all its data from cloud.
-      /// Let the AuthenticationRepository decide which screen to appear as first.
     );
   }
 }
