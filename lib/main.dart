@@ -1,11 +1,17 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/firebase_options.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/style/colors.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:pony_logistics/src/utils/theme/theme.dart';
+import 'package:window_size/window_size.dart';
 
 /// NOTE:
 /// DESIGN PLAYLIST : https://www.youtube.com/playlist?list=PL5jb9EteFAODpfNJu8U2CMqKFp4NaXlto
@@ -14,6 +20,16 @@ import 'package:pony_logistics/src/utils/theme/theme.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  getWindowInfo().then((window) {
+    final screen = window.screen;
+    if (screen != null){
+      final screenFrame = screen.visibleFrame;
+      final width = max((screenFrame.width / 2).roundToDouble(), 800.0);
+      final height = max((screenFrame.height / 2).roundToDouble(), 680.0);
+      setWindowMinSize(Size(.8 * width, .8 * height));
+      setWindowTitle('Pony Logistics');
+    }
+  });
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -36,6 +52,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return MaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: 'Flutter Demo',
+    //   theme: ThemeData(
+    //       primarySwatch: Colors.blue,
+    //       scaffoldBackgroundColor: AppColors.primaryBg
+    //   ),
+    //   home: AdminDashboard(),
+    // );
     return GetMaterialApp(
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
