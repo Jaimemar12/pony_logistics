@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/text_strings.dart';
-import '../../profile/profile_screen.dart';
+import '../../menu/menu_screen.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DashboardAppBar({
@@ -19,7 +19,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       leading: IconButton(
-          onPressed: () => Get.to(() => const ProfileScreen()),
+          onPressed: () => Get.to(() => const MenuScreen()),
           icon: const Icon(Icons.menu),
           color: isDark ? tWhiteColor : tDarkColor),
       title: Text(tAppName, style: Theme.of(context).textTheme.headlineMedium),

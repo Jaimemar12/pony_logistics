@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pony.logitstics.pony_logistics">
+    package="com.pony.logistics.pony_logistics">
    <application
         android:label="pony_logistics"
-        android:name="${applicationName}"
+        android:name="Pony Logistics"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

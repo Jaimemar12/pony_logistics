@@ -4,8 +4,6 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/widgets/appbar.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/widgets/text_form_widget.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/widgets/today_packages.dart';
 import 'package:pony_logistics/src/features/core/screens/packages/packages_screen.dart';
 import 'package:intl/intl.dart';
 import '../../../../constants/colors.dart';
@@ -15,7 +13,6 @@ import '../../controllers/text_controller.dart';
 import '../../models/dashboard/package_model.dart';
 import '../packages/update_package_screen.dart';
 
-
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
@@ -24,7 +21,6 @@ class Dashboard extends StatefulWidget {
     return _Dashboard();
   }
 }
-
 
 class _Dashboard extends State<Dashboard> {
   _Dashboard() : super();
@@ -41,8 +37,8 @@ class _Dashboard extends State<Dashboard> {
     final isDark = MediaQuery.of(context).platformBrightness ==
         Brightness.dark; //Dark mode
     var iconColor = isDark ? tPrimaryColor : tAccentColor;
-    final formKey = GlobalKey<FormState>();
     var textColor = isDark ? tPrimaryColor : tAccentColor;
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: DashboardAppBar(
@@ -61,71 +57,114 @@ class _Dashboard extends State<Dashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "";
+                        } else {
+                          return null;
+                        }
+                      },
                       controller: textController.partNumber,
                       keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                          const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                       ],
                       decoration: InputDecoration(
+                          errorStyle: TextStyle(height: 0),
                           label: const Text(tPartNumber),
-                          prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
+                          prefixIcon:
+                              const Icon(LineAwesomeIcons.slack_hashtag),
                           border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: textColor, width: 1.0))),
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: textColor, width: 1.0))),
                     ),
                     const SizedBox(height: tFormHeight - 20),
                     TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "";
+                        } else {
+                          return null;
+                        }
+                      },
                       controller: textController.caseNumber,
                       keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                          const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                       ],
                       decoration: InputDecoration(
+                          errorStyle: TextStyle(height: 0),
                           label: const Text(tCaseNumber),
-                          prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
+                          prefixIcon:
+                              const Icon(LineAwesomeIcons.slack_hashtag),
                           border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: textColor, width: 1.0))),
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: textColor, width: 1.0))),
                     ),
                     const SizedBox(height: tFormHeight - 20),
                     TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "";
+                        } else {
+                          return null;
+                        }
+                      },
                       controller: textController.quantity,
                       keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                          const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                       ],
                       decoration: InputDecoration(
+                          errorStyle: TextStyle(height: 0),
                           label: const Text(tQuantity),
-                          prefixIcon: const Icon(LineAwesomeIcons.slack_hashtag),
+                          prefixIcon:
+                              const Icon(LineAwesomeIcons.slack_hashtag),
                           border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: textColor, width: 1.0))),
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: textColor, width: 1.0))),
                     ),
                     const SizedBox(height: tFormHeight - 20),
                     TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "";
+                        } else {
+                          return null;
+                        }
+                      },
                       controller: textController.dateReceived,
                       readOnly: true,
                       decoration: InputDecoration(
+                          errorStyle: TextStyle(height: 0),
                           label: const Text(tDateDelivered),
                           prefixIcon: const Icon(Icons.calendar_today),
                           border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(color: textColor, width: 1.0))),
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: textColor, width: 1.0))),
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
                             context: context,
@@ -134,7 +173,7 @@ class _Dashboard extends State<Dashboard> {
                             lastDate: DateTime(2100));
                         if (pickedDate != null) {
                           String formattedDate =
-                          DateFormat('MM-dd-yyyy').format(pickedDate);
+                              DateFormat('MM-dd-yyyy').format(pickedDate);
                           setState(() {
                             textController.dateReceived.text =
                                 formattedDate; //set output date to TextField value.
@@ -152,7 +191,8 @@ class _Dashboard extends State<Dashboard> {
                                 partNumber: textController.partNumber.text.trim(),
                                 caseNumber: textController.caseNumber.text.trim(),
                                 quantity: textController.quantity.text.trim(),
-                                dateDelivered: textController.dateReceived.text.trim());
+                                dateDelivered:
+                                textController.dateReceived.text.trim());
                             TextController.instance.createPackage(package);
                             setState(() {
                               textController.partNumber.text = "";
@@ -209,7 +249,8 @@ class _Dashboard extends State<Dashboard> {
                                     padding: const EdgeInsets.all(1),
                                     decoration: BoxDecoration(
                                         color: tPrimaryColor.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                         border: const Border(
                                           bottom: BorderSide(),
                                           top: BorderSide(),
@@ -227,7 +268,8 @@ class _Dashboard extends State<Dashboard> {
                                             color: iconColor),
                                       ),
                                       title: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                               "PN: ${snapshot.data![index].partNumber} "),
@@ -236,9 +278,11 @@ class _Dashboard extends State<Dashboard> {
                                         ],
                                       ),
                                       subtitle: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text("Q: ${snapshot.data![index].quantity} "),
+                                          Text(
+                                              "Q: ${snapshot.data![index].quantity} "),
                                           Text(
                                               "DD: ${snapshot.data![index].dateDelivered}"),
                                         ],
@@ -249,12 +293,16 @@ class _Dashboard extends State<Dashboard> {
                                           width: 40,
                                           height: 40,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(100),
+                                            borderRadius:
+                                                BorderRadius.circular(100),
                                             color: iconColor.withOpacity(0.1),
                                           ),
                                           child: IconButton(
-                                            onPressed: () => Get.to(() => UpdatePackageScreen(snapshot.data![index])),
-                                            icon: const Icon(LineAwesomeIcons.edit),
+                                            onPressed: () => Get.to(() =>
+                                                UpdatePackageScreen(package:
+                                                    snapshot.data![index])),
+                                            icon: const Icon(
+                                                LineAwesomeIcons.edit),
                                             color: iconColor,
                                           ),
                                         ),

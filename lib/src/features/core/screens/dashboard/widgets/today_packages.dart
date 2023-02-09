@@ -93,7 +93,9 @@ class _TodayPackages extends State<TodayPackages> {
                                     color: iconColor.withOpacity(0.1),
                                   ),
                                   child: IconButton(
-                                    onPressed: () => Get.to(() => UpdatePackageScreen(snapshot.data![index])),
+                                    onPressed: () => Get.to(() =>
+                                        UpdatePackageScreen(
+                                            package: snapshot.data![index])),
                                     icon: const Icon(LineAwesomeIcons.edit),
                                     color: iconColor,
                                   ),

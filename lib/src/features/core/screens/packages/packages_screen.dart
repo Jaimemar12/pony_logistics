@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:pony_logistics/src/features/core/controllers/text_controller.dart';
 import 'package:pony_logistics/src/features/core/screens/packages/update_package_screen.dart';
 
 import '../../../../constants/colors.dart';
@@ -25,13 +27,16 @@ class _PackagesScreen extends State<PackagesScreen> {
       DateFormat('MM-dd-yyyy').format(DateTime(DateTime.now().year + 1, 2, 7));
   String endDate =
       DateFormat('MM-dd-yyyy').format(DateTime(DateTime.now().year + 1, 2, 7));
+  String partNumber = "";
+  bool isFilter = true;
 
   @override
   Widget build(BuildContext context) {
-    final txtTheme = Theme.of(context).textTheme;
-    final controller = Get.put(PackageController());
+    final textController = Get.put(TextController());
+    final packageController = Get.put(PackageController());
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var iconColor = isDark ? tPrimaryColor : tAccentColor;
+    var textColor = isDark ? tPrimaryColor : tAccentColor;
 
     Future refresh() async {
       setState(() {});
@@ -56,15 +61,61 @@ class _PackagesScreen extends State<PackagesScreen> {
         child: Column(
           children: [
             Container(
-              decoration: const BoxDecoration(
-                  border: Border(left: BorderSide(width: 4))),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(tDashboardSearch,
-                      style: txtTheme.displaySmall
-                          ?.apply(color: Colors.grey.withOpacity(1))),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width - 90,
+                        child: Expanded(
+                          child: TextField(
+                            controller: textController.partNumber,
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp('[0-9]')),
+                            ],
+                            decoration: InputDecoration(
+                                label: const Text(tPartNumber),
+                                prefixIcon:
+                                    const Icon(LineAwesomeIcons.slack_hashtag),
+                                border: const OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10.0)),
+                                    borderSide: BorderSide(
+                                        color: textColor, width: 1.0))),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 10,
+                        top: 5,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: iconColor.withOpacity(0.1),
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              partNumber = textController.partNumber.text;
+                              isFilter = false;
+                              refresh();
+                            },
+                            icon: const Icon(LineAwesomeIcons.search),
+                            color: iconColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   IconButton(
                       onPressed: () async {
                         DateTimeRange? dateTimeRange =
@@ -82,20 +133,23 @@ class _PackagesScreen extends State<PackagesScreen> {
                           ),
                         );
                         setState(() {
+                          isFilter = true;
                           startDate = DateFormat('MM-dd-yyyy')
                               .format(dateTimeRange!.start);
 
                           endDate = DateFormat('MM-dd-yyyy')
                               .format(dateTimeRange.end);
                         });
-                        refresh();
                       },
                       icon: const Icon(Icons.filter_list))
                 ],
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             FutureBuilder<List<PackageModel>>(
-              future: controller.getPackagesBetween(startDate, endDate),
+              future: isFilter ? packageController.getPackagesBetween(startDate, endDate) : packageController.getPackages(partNumber),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
@@ -163,7 +217,7 @@ class _PackagesScreen extends State<PackagesScreen> {
                                           ),
                                           child: IconButton(
                                             onPressed: () => Get.to(() =>
-                                                UpdatePackageScreen(
+                                                UpdatePackageScreen(package:
                                                     snapshot.data![index])),
                                             icon: const Icon(
                                                 LineAwesomeIcons.edit),
@@ -187,7 +241,7 @@ class _PackagesScreen extends State<PackagesScreen> {
                     return const Center(child: Text('Something went wrong'));
                   }
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: SizedBox(child: CircularProgressIndicator()));
                 }
               },
             ),

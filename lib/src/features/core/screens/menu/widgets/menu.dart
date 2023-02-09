@@ -3,8 +3,8 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../../../../constants/colors.dart';
 
-class ProfileMenuWidget extends StatelessWidget {
-  const ProfileMenuWidget({
+class MenuWidget extends StatelessWidget {
+  const MenuWidget({
     Key? key,
     required this.title,
     required this.icon,

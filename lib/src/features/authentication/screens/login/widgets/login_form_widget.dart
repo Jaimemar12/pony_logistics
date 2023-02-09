@@ -6,10 +6,19 @@ import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
 import '../../forget_password/forget_password_options/forget_password_model_bottom_sheet.dart';
 
-class LoginFormWidget extends StatelessWidget {
-  const LoginFormWidget({
-    Key? key,
-  }) : super(key: key);
+class LoginFormWidget extends StatefulWidget {
+  const LoginFormWidget({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _LoginFormWidget();
+  }
+}
+
+class _LoginFormWidget extends State<LoginFormWidget> {
+  _LoginFormWidget() : super();
+
+  bool showPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +34,45 @@ class LoginFormWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "";
+                  } else {
+                    return null;
+                  }
+                },
                 controller: controller.email,
                 decoration: const InputDecoration(
+                    errorStyle: TextStyle(height: 0),
                     prefixIcon: Icon(LineAwesomeIcons.user),
                     labelText: tEmail,
                     hintText: tEmail),
               ),
               const SizedBox(height: tFormHeight - 20),
               TextFormField(
-                obscureText: true,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "";
+                  } else {
+                    return null;
+                  }
+                },
+                obscureText: showPassword,
                 controller: controller.password,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                    errorStyle: TextStyle(height: 0),
                     prefixIcon: Icon(Icons.fingerprint),
                     labelText: tPassword,
                     hintText: tPassword,
-                    suffixIcon: Icon(LineAwesomeIcons.eye_slash)),
+                    suffixIcon: IconButton(
+                        icon: Icon(showPassword
+                            ? LineAwesomeIcons.eye_slash
+                            : LineAwesomeIcons.eye),
+                        onPressed: () {
+                          setState(() {
+                            showPassword = !showPassword;
+                          });
+                        })),
               ),
               const SizedBox(height: tFormHeight - 20),
 

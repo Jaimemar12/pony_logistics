@@ -3,18 +3,16 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
 import 'package:pony_logistics/src/constants/text_strings.dart';
-import 'package:pony_logistics/src/features/core/screens/packages/packages_screen.dart';
-import 'package:pony_logistics/src/features/core/screens/profile/update_profile_screen.dart';
-import 'package:pony_logistics/src/features/core/screens/profile/widgets/image_with_icon.dart';
-import 'package:pony_logistics/src/features/core/screens/profile/widgets/profile_menu.dart';
+import 'package:pony_logistics/src/features/core/screens/menu/update_profile_screen.dart';
+import 'package:pony_logistics/src/features/core/screens/menu/widgets/menu.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
 import '../../../authentication/models/user_model.dart';
 import '../../controllers/profile_controller.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class MenuScreen extends StatelessWidget {
+  const MenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                         const SizedBox(height: 10),
 
                         /// -- MENU
-                        ProfileMenuWidget(
+                        MenuWidget(
                             title: "Settings",
                             icon: LineAwesomeIcons.cog,
                             onPress: () {}),
@@ -83,11 +81,11 @@ class ProfileScreen extends StatelessWidget {
                         // ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () => Get.to(AllUsers())),
                         const Divider(),
                         const SizedBox(height: 10),
-                        ProfileMenuWidget(
+                        MenuWidget(
                             title: "Information",
                             icon: LineAwesomeIcons.info,
                             onPress: () {}),
-                        ProfileMenuWidget(
+                        MenuWidget(
                             title: "Logout",
                             icon: LineAwesomeIcons.alternate_sign_out,
                             textColor: Colors.red,

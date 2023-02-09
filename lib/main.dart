@@ -23,7 +23,9 @@ Future<void> main() async {
 
   /// Before running App - Initialize Firebase and after initialization call
   /// Authentication Repository so that It can check which screen to show.
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  await Firebase.initializeApp(
+    name: 'pony-logistics',
+      options: DefaultFirebaseOptions.currentPlatform)
       .then((value) => Get.put(AuthenticationRepository()));
 
   runApp(const App());

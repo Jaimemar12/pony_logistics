@@ -1,4 +1,4 @@
-package com.pony.logitstics.pony_logistics;
+package com.pony.logistics.pony_logistics;
 
 import io.flutter.embedding.android.FlutterActivity;
 

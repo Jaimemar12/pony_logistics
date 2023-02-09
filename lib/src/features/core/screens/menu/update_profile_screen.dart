@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 import 'package:pony_logistics/src/features/core/controllers/profile_controller.dart';
-import 'package:pony_logistics/src/features/core/screens/profile/profile_form.dart';
-import 'package:pony_logistics/src/features/core/screens/profile/widgets/image_with_icon.dart';
+import 'package:pony_logistics/src/features/core/screens/menu/profile_screen.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 

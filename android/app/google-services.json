@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:348313600026:android:cc7b5e8d013b07ef3991a3",
+        "mobilesdk_app_id": "1:348313600026:android:814359f4692ab3543991a3",
         "android_client_info": {
-          "package_name": "com.pony.logitstics.pony_logistics"
+          "package_name": "com.pony.logistics.pony_logistics"
         }
       },
       "oauth_client": [
         {
-          "client_id": "348313600026-ghh1h61ifvrl7rf00a5qu675k0n1sse4.apps.googleusercontent.com",
+          "client_id": "348313600026-25ja5cjt84b7e1pl78no66pmp92tv94v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pony.logitstics.pony_logistics",
+            "package_name": "com.pony.logistics.pony_logistics",
             "certificate_hash": "8d47783480d507413264e7a0c600dc603af44199"
           }
         },
@@ -40,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "348313600026-ic11qkgq973ns06v21tfhvqmqtpts665.apps.googleusercontent.com",
+              "client_id": "348313600026-dei9equplm7jgc8p60v53r6l7tsg18p2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.pony.logitstics.ponyLogistics"
+                "bundle_id": "com.pony.logistics.ponyLogistics"
               }
             }
           ]
