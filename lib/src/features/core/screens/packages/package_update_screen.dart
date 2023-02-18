@@ -4,7 +4,7 @@
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 // import 'package:pony_logistics/src/features/core/controllers/package_controller.dart';
 // import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
-// import 'package:pony_logistics/src/features/core/screens/dashboard/dashboard.dart';
+// import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_content.dart';
 //
 // import '../../../../constants/colors.dart';
 // import '../../../../constants/sizes.dart';

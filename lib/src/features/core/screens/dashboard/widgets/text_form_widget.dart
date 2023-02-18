@@ -141,13 +141,15 @@ class _TextFormWidget extends State<TextFormWidget> {
                     */
 
                     final package = PackageModel(
+                        containerName: controller.containerName.text.trim(),
                         partNumber: controller.partNumber.text.trim(),
                         caseNumber: controller.caseNumber.text.trim(),
                         quantity: controller.quantity.text.trim(),
-                        dateDelivered: controller.dateReceived.text.trim());
+                        dateReceived: controller.dateReceived.text.trim());
                     await controller.createPackage(package);
                     // PackageController.instance.createPackage(package);
                     setState(() {
+                      controller.containerName.text = "";
                       controller.partNumber.text = "";
                       controller.caseNumber.text = "";
                       controller.quantity.text = "";

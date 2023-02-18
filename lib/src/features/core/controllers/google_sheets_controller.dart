@@ -13,11 +13,14 @@ class GoogleSheetsController extends GetxController {
   final _authRepo = Get.put(AuthenticationRepository());
   final _packageRepo = Get.put(PackageRepository());
 
+  final containerName = TextEditingController();
   final partNumber = TextEditingController();
   final caseNumber = TextEditingController();
   final quantity = TextEditingController();
   final dateReceived = TextEditingController();
+  final dateShipped = TextEditingController();
   final dateDelivered = TextEditingController();
+  final truckNumber = TextEditingController();
 
   Future<List<PackageModel>> getAllPackages() async =>
       await _packageRepo.getAllPackages();

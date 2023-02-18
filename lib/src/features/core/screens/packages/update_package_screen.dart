@@ -9,7 +9,8 @@ import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../../controllers/package_controller.dart';
-import '../dashboard/dashboard.dart';
+import '../dashboard/admin_dashboard.dart';
+import '../dashboard/submit_package_content.dart';
 
 class UpdatePackageScreen extends StatefulWidget {
   final PackageModel package;
@@ -32,10 +33,14 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
   @override
   Widget build(BuildContext context) {
     //Controllers
+    final containerName = TextEditingController(text: package.containerName);
     final partNumber = TextEditingController(text: package.partNumber);
     final caseNumber = TextEditingController(text: package.caseNumber);
     final quantity = TextEditingController(text: package.quantity);
+    final dateReceived = TextEditingController(text: package.dateReceived);
+    final dateShipped = TextEditingController(text: package.dateShipped);
     final dateDelivered = TextEditingController(text: package.dateDelivered);
+    final trailerNumber = TextEditingController(text: package.trailerNumber);
 
     // final controller = Get.put(PackageController());
     final controller = Get.put(GoogleSheetsController());
@@ -126,7 +131,7 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                 ),
                 const SizedBox(height: tFormHeight - 20),
                 TextFormField(
-                  controller: dateDelivered,
+                  controller: dateReceived,
                   readOnly: true,
                   decoration: InputDecoration(
                       label: const Text(tDateDelivered),
@@ -164,15 +169,16 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                     onPressed: () async {
                       final packageData = PackageModel(
                         id: package.id,
+                        containerName: containerName.text.trim(),
                         partNumber: partNumber.text.trim(),
                         caseNumber: caseNumber.text.trim(),
                         quantity: quantity.text.trim(),
-                        dateDelivered: dateDelivered.text.trim(),
+                        dateReceived: dateReceived.text.trim(),
                       );
 
                       await controller.updateRecord(packageData);
                       Get.to(
-                        () => const Dashboard(),
+                        () => AdminDashboard(),
                         transition: Transition.noTransition,
                       );
                     },
@@ -204,7 +210,7 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                             onPressed: () async {
                               await controller.deletePackage(package);
                               Get.to(
-                                    () => const Dashboard(),
+                                    () => AdminDashboard(),
                                 transition: Transition.noTransition,
                               );
                             },

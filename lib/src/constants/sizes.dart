@@ -7,3 +7,6 @@ const tFormHeight = 30.0;
 //Dashboard
 const tDashboardPadding = 20.0;
 const tDashboardCardPadding = 10.0;
+
+//Admin
+const appPadding = 16.0;

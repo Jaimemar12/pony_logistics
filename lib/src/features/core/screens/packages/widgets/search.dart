@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'package:pony_logistics/src/features/core/screens/packages/packages_screen.dart';
+// import 'package:pony_logistics/src/features/core/screens/packages/search_package_content.dart';
 // import 'package:pony_logistics/src/features/core/screens/packages/widgets/search_packages.dart';
 //
 // import 'package:intl/intl.dart';

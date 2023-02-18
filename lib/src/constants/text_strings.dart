@@ -79,7 +79,7 @@ const String tDashboardSearch = "Search Part Number";
 const String tPartNumber = "Part Number";
 const String tCaseNumber = "Case Number";
 const String tQuantity = "Quantity";
-const String tDateDelivered = "Date Delivered";
+const String tDateDelivered = "Date Received";
 const String tSubmit = "Submit";
 
 // -- Profile Screen - Text

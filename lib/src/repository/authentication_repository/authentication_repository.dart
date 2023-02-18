@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/src/features/authentication/screens/welcome/welcome_screen.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_content.dart';
 
+import '../../features/core/screens/dashboard/admin_dashboard.dart';
 import 'exceptions/login_with_email_and_pssword_failure.dart';
 import 'exceptions/signup_email_password_failure.dart';
 
@@ -37,7 +38,7 @@ class AuthenticationRepository extends GetxController {
             transition: Transition.noTransition,
           )
         : Get.offAll(
-            () => const Dashboard(),
+            () => AdminDashboard(),
             transition: Transition.noTransition,
           );
   }
@@ -113,7 +114,7 @@ class AuthenticationRepository extends GetxController {
           email: email, password: password);
       firebaseUser.value != null
           ? Get.offAll(
-              () => const Dashboard(),
+              () => AdminDashboard(),
               transition: Transition.noTransition,
             )
           : Get.to(

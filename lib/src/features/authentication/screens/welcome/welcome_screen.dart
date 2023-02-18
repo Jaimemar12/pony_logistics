@@ -5,9 +5,6 @@ import 'package:pony_logistics/src/features/authentication/screens/signup/signup
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
-import '../../../../utils/animations/fade_in_animation/animation_design.dart';
-import '../../../../utils/animations/fade_in_animation/fade_in_animation_controller.dart';
-import '../../../../utils/animations/fade_in_animation/fade_in_animation_model.dart';
 import '../login/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {

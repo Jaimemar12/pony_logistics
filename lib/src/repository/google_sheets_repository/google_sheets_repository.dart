@@ -79,7 +79,7 @@ class PackageRepository extends GetxController {
           cell.value = package.quantity;
           break;
         case 3:
-          cell.value = package.dateDelivered;
+          cell.value = package.dateReceived;
           break;
       }
       index++;
@@ -114,7 +114,7 @@ class PackageRepository extends GetxController {
     var filteredPackages = <PackageModel>[];
 
     for (int i = 0; i < packages.length; i++) {
-      var date = dateFormat.parse(packages[i].dateDelivered);
+      var date = dateFormat.parse(packages[i].dateReceived);
       if (date.compareTo(
                   DateTime.parse(dateFormat.parse(startDate).toString())) >=
               0 &&
@@ -134,7 +134,7 @@ class PackageRepository extends GetxController {
 
     for (int i = 0; i < packages.length; i++) {
       var date = DateFormat('MM/dd/yyyy')
-          .format(dateFormat.parse(packages[i].dateDelivered))
+          .format(dateFormat.parse(packages[i].dateReceived))
           .toString();
       var todayDate =
           DateFormat('MM/dd/yyyy').format(DateTime.now()).toString();
