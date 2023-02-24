@@ -70,8 +70,10 @@ class DefaultFirebaseOptions {
     projectId: 'pony-logistics',
     databaseURL: 'https://pony-logistics-default-rtdb.firebaseio.com',
     storageBucket: 'pony-logistics.appspot.com',
-    androidClientId: '348313600026-25ja5cjt84b7e1pl78no66pmp92tv94v.apps.googleusercontent.com',
-    iosClientId: '348313600026-dei9equplm7jgc8p60v53r6l7tsg18p2.apps.googleusercontent.com',
+    androidClientId:
+        '348313600026-25ja5cjt84b7e1pl78no66pmp92tv94v.apps.googleusercontent.com',
+    iosClientId:
+        '348313600026-dei9equplm7jgc8p60v53r6l7tsg18p2.apps.googleusercontent.com',
     iosBundleId: 'com.pony.logistics.ponyLogistics',
   );
 
@@ -82,8 +84,10 @@ class DefaultFirebaseOptions {
     projectId: 'pony-logistics',
     databaseURL: 'https://pony-logistics-default-rtdb.firebaseio.com',
     storageBucket: 'pony-logistics.appspot.com',
-    androidClientId: '348313600026-25ja5cjt84b7e1pl78no66pmp92tv94v.apps.googleusercontent.com',
-    iosClientId: '348313600026-dei9equplm7jgc8p60v53r6l7tsg18p2.apps.googleusercontent.com',
+    androidClientId:
+        '348313600026-25ja5cjt84b7e1pl78no66pmp92tv94v.apps.googleusercontent.com',
+    iosClientId:
+        '348313600026-dei9equplm7jgc8p60v53r6l7tsg18p2.apps.googleusercontent.com',
     iosBundleId: 'com.pony.logistics.ponyLogistics',
   );
 }

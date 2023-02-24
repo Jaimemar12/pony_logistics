@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
-import 'package:pony_logistics/src/features/core/controllers/profile_controller.dart';
 import 'package:pony_logistics/src/features/core/screens/menu/profile_screen.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
-  UserModel user;
-  UpdateProfileScreen(this.user, {Key? key}) : super(key: key);
+  final UserModel user;
+  const UpdateProfileScreen(this.user, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

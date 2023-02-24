@@ -28,7 +28,8 @@ class LoginFooterWidget extends StatelessWidget {
         ),
         const SizedBox(height: tFormHeight - 20),
         TextButton(
-          onPressed: () => Get.off(() => const SignUpScreen(), transition: Transition.noTransition),
+          onPressed: () => Get.off(() => const SignUpScreen(),
+              transition: Transition.noTransition),
           child: Text.rich(
             TextSpan(
                 text: tDontHaveAnAccount,

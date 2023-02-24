@@ -3,16 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
 import 'package:get/get.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/widgets/appbar.dart';
-import 'package:pony_logistics/src/features/core/screens/packages/search_package_content.dart';
 import 'package:intl/intl.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/text_strings.dart';
 import '../../controllers/google_sheets_controller.dart';
-import '../../controllers/package_controller.dart';
-import '../../controllers/text_controller.dart';
 import '../../models/dashboard/package_model.dart';
-import '../packages/update_package_screen.dart';
 import 'components/responsive.dart';
 
 class SubmitPackageContent extends StatefulWidget {
@@ -43,7 +38,7 @@ class _SubmitPackageContent extends State<SubmitPackageContent> {
 
     return SafeArea(
       child: SingleChildScrollView(
-        padding: EdgeInsets.all(appPadding),
+        padding: const EdgeInsets.all(appPadding),
         child: Column(
           children: [
             Row(
@@ -60,20 +55,20 @@ class _SubmitPackageContent extends State<SubmitPackageContent> {
                     ),
                   ),
                 Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: appPadding,
                     vertical: appPadding / 2,
                   ),
                   child: Row(
                     children: [
                       ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
                         child: Image.asset(
                           'assets/images/photo3.jpg',
                           height: 38,
                           width: 38,
                           fit: BoxFit.cover,
                         ),
-                        borderRadius: BorderRadius.circular(30),
                       ),
                     ],
                   ),
@@ -96,7 +91,7 @@ class _SubmitPackageContent extends State<SubmitPackageContent> {
                     textInputAction: TextInputAction.next,
                     controller: packageController.containerName,
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(height: 0),
+                        errorStyle: const TextStyle(height: 0),
                         label: const Text('Container Name'),
                         prefixIcon: Icon(
                           LineAwesomeIcons.slack_hashtag,
@@ -128,7 +123,7 @@ class _SubmitPackageContent extends State<SubmitPackageContent> {
                       FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                     ],
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(height: 0),
+                        errorStyle: const TextStyle(height: 0),
                         label: const Text(tPartNumber),
                         prefixIcon: Icon(
                           LineAwesomeIcons.slack_hashtag,
@@ -160,7 +155,7 @@ class _SubmitPackageContent extends State<SubmitPackageContent> {
                       FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                     ],
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(height: 0),
+                        errorStyle: const TextStyle(height: 0),
                         label: const Text(tCaseNumber),
                         prefixIcon: Icon(
                           LineAwesomeIcons.slack_hashtag,
@@ -192,7 +187,7 @@ class _SubmitPackageContent extends State<SubmitPackageContent> {
                       FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                     ],
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(height: 0),
+                        errorStyle: const TextStyle(height: 0),
                         label: const Text(tQuantity),
                         prefixIcon: Icon(
                           LineAwesomeIcons.slack_hashtag,
@@ -219,7 +214,7 @@ class _SubmitPackageContent extends State<SubmitPackageContent> {
                     controller: packageController.dateReceived,
                     readOnly: true,
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(height: 0),
+                        errorStyle: const TextStyle(height: 0),
                         label: const Text(tDateDelivered),
                         prefixIcon: Icon(
                           Icons.calendar_today,

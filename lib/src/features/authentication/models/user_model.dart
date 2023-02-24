@@ -16,7 +16,7 @@ class UserModel {
       required this.fullName,
       required this.phoneNo});
 
-  /// convert model to Json structure so that you can it to store data in Firesbase
+  /// convert model to Json structure so that you can it to store data in Firebase
   toJson() {
     return {
       "FullName": fullName,
@@ -50,7 +50,6 @@ class UserModel {
   }
 
   factory UserModel.fromGoogleSnapshot(Map<String, dynamic> snapshot) {
-
     return UserModel(
       id: snapshot["Id"],
       fullName: snapshot["FullName"],

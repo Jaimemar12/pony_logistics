@@ -48,7 +48,7 @@ class ProfileController extends GetxController {
           duration: const Duration(seconds: 2));
     } else {
       bool success = await _userRepo.deleteUser(user.id.toString());
-      if(success) {
+      if (success) {
         Get.snackbar("Success", "Package has been deleted.",
             duration: const Duration(seconds: 2));
       } else {

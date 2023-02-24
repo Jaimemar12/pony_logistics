@@ -11,10 +11,7 @@ import '../../controllers/profile_controller.dart';
 class ProfileFormScreen extends StatefulWidget {
   final UserModel user;
 
-  const ProfileFormScreen(
-      this.user, {
-      Key? key})
-      : super(key: key);
+  const ProfileFormScreen(this.user, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

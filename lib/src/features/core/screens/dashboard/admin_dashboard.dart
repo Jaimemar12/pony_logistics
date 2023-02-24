@@ -7,19 +7,25 @@ import 'components/drawer_menu.dart';
 import 'components/responsive.dart';
 
 class AdminDashboard extends StatelessWidget {
-  AdminDashboard({Key? key}) : super(key: key);
+  const AdminDashboard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ? tAccentColor : tPrimaryColor,
+      backgroundColor:
+          MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? tAccentColor
+              : tPrimaryColor,
       drawer: const DrawerMenu(),
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (Responsive.isDesktop(context)) Expanded(child: DrawerMenu(),),
-            Expanded(
+            if (Responsive.isDesktop(context))
+              const Expanded(
+                child: DrawerMenu(),
+              ),
+            const Expanded(
               flex: 5,
               child: DashboardContent(),
             )

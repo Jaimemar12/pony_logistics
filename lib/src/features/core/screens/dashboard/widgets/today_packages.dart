@@ -6,7 +6,6 @@ import 'package:pony_logistics/src/features/core/screens/packages/update_package
 
 import '../../../../../constants/colors.dart';
 import '../../../controllers/google_sheets_controller.dart';
-import '../../../controllers/package_controller.dart';
 
 class TodayPackages extends StatefulWidget {
   const TodayPackages({Key? key}) : super(key: key);
@@ -61,16 +60,13 @@ class _TodayPackages extends State<TodayPackages> {
                               shape: BoxShape.circle,
                               color: iconColor.withOpacity(0.1),
                             ),
-                            child: Icon(LineAwesomeIcons.box,
-                                color: iconColor),
+                            child: Icon(LineAwesomeIcons.box, color: iconColor),
                           ),
                           title: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                  "PN: ${snapshot.data![index].partNumber} "),
-                              Text(
-                                  "CNO: ${snapshot.data![index].caseNumber}"),
+                              Text("PN: ${snapshot.data![index].partNumber} "),
+                              Text("CNO: ${snapshot.data![index].caseNumber}"),
                             ],
                           ),
                           subtitle: Row(

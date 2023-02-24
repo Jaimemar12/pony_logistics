@@ -1,19 +1,14 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/firebase_options.dart';
-import 'package:pony_logistics/src/features/core/controllers/admin_controller.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
 import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
 import 'package:pony_logistics/src/utils/theme.dart';
-import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
 import 'dart:io' show Platform;
 
@@ -23,7 +18,7 @@ import 'dart:io' show Platform;
 /// For the Firebase setup You can watch this video - https://www.youtube.com/watch?v=fxDusoMcWj8
 
 Future<void> main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isAndroid || Platform.isIOS) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

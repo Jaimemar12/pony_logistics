@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 
-import '../../features/authentication/models/user_model.dart';
 
 class PackageRepository extends GetxController {
   static PackageRepository get instance => Get.find();
@@ -67,7 +63,7 @@ class PackageRepository extends GetxController {
         await _packageSheet!.cells.rowByKey(package.id.toString());
     if (cellsOfRow == null) return;
     int index = 0;
-    cellsOfRow.forEach((cell) {
+    for (var cell in cellsOfRow) {
       switch (index) {
         case 0:
           cell.value = package.partNumber;
@@ -83,7 +79,7 @@ class PackageRepository extends GetxController {
           break;
       }
       index++;
-    });
+    }
     await _packageSheet!.cells.insert(cellsOfRow);
   }
 

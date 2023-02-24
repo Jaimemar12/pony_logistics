@@ -23,7 +23,7 @@ class TTextTheme {
         fontSize: 14.0, fontWeight: FontWeight.w600, color: tDarkColor),
     bodyLarge: GoogleFonts.poppins(fontSize: 14.0, color: tDarkColor),
     bodyMedium:
-    GoogleFonts.poppins(fontSize: 14.0, color: tDarkColor.withOpacity(0.8)),
+        GoogleFonts.poppins(fontSize: 14.0, color: tDarkColor.withOpacity(0.8)),
   );
 
   /* -- Dark Text Theme -- */

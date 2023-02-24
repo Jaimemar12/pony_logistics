@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
-import 'package:pony_logistics/src/repository/package_repository/package_repository.dart';
-import 'package:intl/intl.dart';
 
 class GoogleSheetsController extends GetxController {
   static GoogleSheetsController get instance => Get.find();
@@ -58,7 +56,7 @@ class GoogleSheetsController extends GetxController {
           duration: const Duration(seconds: 2));
     } else {
       bool success = await _packageRepo.deletePackage(package.id.toString());
-      if(success) {
+      if (success) {
         Get.snackbar("Success", "Package has been deleted.",
             duration: const Duration(seconds: 2));
       } else {

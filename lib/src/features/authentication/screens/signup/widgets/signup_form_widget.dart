@@ -88,9 +88,9 @@ class _SignUpFormWidget extends State<SignUpFormWidget> {
               obscureText: showPassword,
               controller: controller.password,
               decoration: InputDecoration(
-                errorStyle: TextStyle(height: 0),
-                label: Text(tPassword),
-                prefixIcon: Icon(Icons.fingerprint),
+                errorStyle: const TextStyle(height: 0),
+                label: const Text(tPassword),
+                prefixIcon: const Icon(Icons.fingerprint),
                 hintText: tPassword,
                 suffixIcon: IconButton(
                     icon: Icon(showPassword

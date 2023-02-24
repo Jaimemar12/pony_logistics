@@ -60,8 +60,8 @@ class _LoginFormWidget extends State<LoginFormWidget> {
                 obscureText: showPassword,
                 controller: controller.password,
                 decoration: InputDecoration(
-                    errorStyle: TextStyle(height: 0),
-                    prefixIcon: Icon(Icons.fingerprint),
+                    errorStyle: const TextStyle(height: 0),
+                    prefixIcon: const Icon(Icons.fingerprint),
                     labelText: tPassword,
                     hintText: tPassword,
                     suffixIcon: IconButton(

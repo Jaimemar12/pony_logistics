@@ -26,7 +26,7 @@ class PackageModel {
       this.trailerNumber,
       this.status});
 
-  /// convert model to Json structure so that you can it to store data in Firesbase
+  /// convert model to Json structure so that you can it to store data in Firebase
   toJson() {
     return {
       "ContainerName": containerName,
@@ -64,8 +64,8 @@ class PackageModel {
         .add(Duration(days: int.parse(snapshot["DateReceived"])))
         .toString());
     var dateReceived = "${date.month}/${date.day}/${date.year}";
-    var dateShipped;
-    var dateDelivered;
+    String dateShipped;
+    String dateDelivered;
 
     if (snapshot["DateShipped"] != 'null') {
       date = DateTime.parse(epoch

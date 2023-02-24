@@ -4,13 +4,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/core/controllers/google_sheets_controller.dart';
-import 'package:pony_logistics/src/features/core/controllers/text_controller.dart';
 import 'package:pony_logistics/src/features/core/screens/packages/update_package_screen.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
-import '../../controllers/package_controller.dart';
 import '../../models/dashboard/package_model.dart';
 import '../dashboard/components/drawer_menu.dart';
 import '../dashboard/components/responsive.dart';
@@ -54,7 +52,7 @@ class _SearchPackageContent extends State<SearchPackageContent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (Responsive.isDesktop(context))
-            Expanded(
+            const Expanded(
               child: DrawerMenu(),
             ),
           Expanded(
@@ -81,16 +79,22 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true),
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[0-9]')),
+                            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                           ],
+                          textInputAction: TextInputAction.go,
+                          onSubmitted: (value) {
+                            setState(() {
+                              isFilter = false;
+                              partNumber = value;
+                            });
+                          },
                           decoration: InputDecoration(
                               label: const Text(tPartNumber),
                               prefixIcon:
-                              const Icon(LineAwesomeIcons.slack_hashtag),
+                                  const Icon(LineAwesomeIcons.slack_hashtag),
                               border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(10.0))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
                               focusedBorder: OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(10.0)),
@@ -101,11 +105,10 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                       IconButton(
                         onPressed: () async {
                           DateTimeRange? dateTimeRange =
-                          await showDateRangePicker(
+                              await showDateRangePicker(
                             context: context,
                             initialDateRange: DateTimeRange(
-                                start:
-                                findFirstDateOfTheWeek(DateTime.now()),
+                                start: findFirstDateOfTheWeek(DateTime.now()),
                                 end: DateTime.now()),
                             firstDate: DateTime(2000),
                             lastDate: DateTime(2100),
@@ -116,7 +119,7 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                             ),
                           );
                           setState(() {
-                            if(dateTimeRange != null) {
+                            if (dateTimeRange != null) {
                               isFilter = true;
                               startDate = DateFormat('MM/dd/yyyy')
                                   .format(dateTimeRange.start);
@@ -126,22 +129,24 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                             }
                           });
                         },
-                        icon: const Icon(Icons.filter_list), hoverColor: transparent,),
+                        icon: const Icon(Icons.filter_list),
+                        hoverColor: transparent,
+                      ),
                       Container(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: appPadding,
                           vertical: appPadding / 2,
                         ),
                         child: Row(
                           children: [
                             ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
                               child: Image.asset(
                                 'assets/images/photo3.jpg',
                                 height: 38,
                                 width: 38,
                                 fit: BoxFit.cover,
                               ),
-                              borderRadius: BorderRadius.circular(30),
                             ),
                           ],
                         ),
@@ -153,9 +158,9 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                   ),
                   FutureBuilder<List<PackageModel>>(
                     future: isFilter
-                    // ? googleSheetsController.getPackagesBetween(startDate, endDate)
+                        // ? googleSheetsController.getPackagesBetween(startDate, endDate)
                         ? packageController.getPackagesBetween(
-                        startDate, endDate)
+                            startDate, endDate)
                         : packageController.getPackages(partNumber),
                     // : googleSheetsController.getPackages(partNumber),
                     builder: (context, snapshot) {
@@ -177,7 +182,7 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                                               color: tPrimaryColor
                                                   .withOpacity(0.1),
                                               borderRadius:
-                                              BorderRadius.circular(10.0),
+                                                  BorderRadius.circular(10.0),
                                               border: const Border(
                                                 bottom: BorderSide(),
                                                 top: BorderSide(),
@@ -187,19 +192,18 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                                           child: ListTile(
                                             leading: Container(
                                               padding:
-                                              const EdgeInsets.all(10.0),
+                                                  const EdgeInsets.all(10.0),
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: iconColor
-                                                    .withOpacity(0.1),
+                                                color:
+                                                    iconColor.withOpacity(0.1),
                                               ),
-                                              child: Icon(
-                                                  LineAwesomeIcons.box,
+                                              child: Icon(LineAwesomeIcons.box,
                                                   color: iconColor),
                                             ),
                                             title: Row(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                     "PN: ${snapshot.data![index].partNumber} "),
@@ -209,7 +213,7 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                                             ),
                                             subtitle: Row(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                     "Q: ${snapshot.data![index].quantity} "),
@@ -219,24 +223,24 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                                             ),
                                             trailing: Container(
                                               padding:
-                                              const EdgeInsets.all(1.0),
+                                                  const EdgeInsets.all(1.0),
                                               child: Container(
                                                 width: 40,
                                                 height: 40,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                      100),
+                                                      BorderRadius.circular(
+                                                          100),
                                                   color: iconColor
                                                       .withOpacity(0.1),
                                                 ),
                                                 child: IconButton(
                                                   onPressed: () => Get.to(
-                                                        () => UpdatePackageScreen(
+                                                    () => UpdatePackageScreen(
                                                         package: snapshot
                                                             .data![index]),
-                                                    transition: Transition
-                                                        .noTransition,
+                                                    transition:
+                                                        Transition.noTransition,
                                                   ),
                                                   icon: const Icon(
                                                       LineAwesomeIcons.edit),
@@ -255,8 +259,7 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                             ),
                           );
                         } else if (snapshot.hasError) {
-                          return Center(
-                              child: Text(snapshot.error.toString()));
+                          return Center(child: Text(snapshot.error.toString()));
                         } else {
                           return const Center(
                               child: Text('Something went wrong'));
@@ -264,7 +267,7 @@ class _SearchPackageContent extends State<SearchPackageContent> {
                       } else {
                         return const Center(
                             child:
-                            SizedBox(child: CircularProgressIndicator()));
+                                SizedBox(child: CircularProgressIndicator()));
                       }
                     },
                   ),

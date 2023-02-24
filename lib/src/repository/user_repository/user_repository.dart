@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
@@ -60,7 +58,7 @@ class UserRepository extends GetxController {
   Future<void> createUser(UserModel user) async {
     if (_userSheet == null) return;
     var json = user.toJsonG();
-    while(await _userSheet!.values.map.rowByKey(json["Id"]) != null){
+    while (await _userSheet!.values.map.rowByKey(json["Id"]) != null) {
       json = user.toJsonG();
     }
     await _userSheet!.values.map.appendRow(json);
@@ -100,15 +98,13 @@ class UserRepository extends GetxController {
         : snapshot.map((e) => UserModel.fromGoogleSnapshot(e)).toList();
   }
 
-
-
   /// Update User details
   Future<void> updateUserRecord(UserModel user) async {
     final cellsOfRow = await _userSheet!.cells.rowByKey(user.id.toString());
     if (cellsOfRow == null) return;
     int index = 0;
-    cellsOfRow.forEach((cell) {
-      switch(index){
+    for (var cell in cellsOfRow) {
+      switch (index) {
         case 0:
           cell.value = user.fullName;
           break;
@@ -123,13 +119,15 @@ class UserRepository extends GetxController {
           break;
       }
       index++;
-    });
+    }
     await _userSheet!.cells.insert(cellsOfRow);
   }
 
   /// Delete User Data
   Future<bool> deleteUser(String id) async {
     final index = await _userSheet!.values.rowIndexOf(id);
-    return index == -1 ? Future<bool>.value(false) : _userSheet!.deleteRow(index);
+    return index == -1
+        ? Future<bool>.value(false)
+        : _userSheet!.deleteRow(index);
   }
 }

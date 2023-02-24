@@ -1,9 +1,7 @@
-
-
 import '../../../../../constants/colors.dart';
 import '../../../models/analytic_info_model.dart';
 import '../../../models/discussions_info_model.dart';
-import '../../../models/referal_info_model.dart';
+import '../../../models/referral_info_model.dart';
 
 List analyticData = [
   AnalyticInfo(
@@ -66,26 +64,25 @@ List discussionData = [
 ];
 
 List referalData = [
-  ReferalInfoModel(
+  ReferralInfoModel(
     title: "Facebook",
     count: 234,
     svgSrc: "assets/icons/Facebook.svg",
     color: primaryColor,
   ),
-  ReferalInfoModel(
+  ReferralInfoModel(
     title: "Twitter",
     count: 234,
     svgSrc: "assets/icons/Twitter.svg",
     color: primaryColor,
   ),
-  ReferalInfoModel(
+  ReferralInfoModel(
     title: "Linkedin",
     count: 234,
     svgSrc: "assets/icons/Linkedin.svg",
     color: primaryColor,
   ),
-
-  ReferalInfoModel(
+  ReferralInfoModel(
     title: "Dribble",
     count: 234,
     svgSrc: "assets/icons/Dribbble.svg",

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import '../../../repository/authentication_repository/authentication_repository.dart';
 import '../../core/screens/dashboard/admin_dashboard.dart';
-import '../../core/screens/dashboard/submit_package_content.dart';
 
 class OTPController extends GetxController {
   static OTPController get instance => Get.find();
@@ -10,7 +9,7 @@ class OTPController extends GetxController {
     var isVerified = await AuthenticationRepository.instance.verifyOTP(otp);
     isVerified
         ? Get.offAll(
-      AdminDashboard(),
+            AdminDashboard(),
             transition: Transition.noTransition,
           )
         : Get.back();

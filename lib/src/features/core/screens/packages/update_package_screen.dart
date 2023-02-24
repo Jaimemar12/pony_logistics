@@ -8,9 +8,7 @@ import 'package:intl/intl.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
-import '../../controllers/package_controller.dart';
 import '../dashboard/admin_dashboard.dart';
-import '../dashboard/submit_package_content.dart';
 
 class UpdatePackageScreen extends StatefulWidget {
   final PackageModel package;
@@ -38,9 +36,9 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
     final caseNumber = TextEditingController(text: package.caseNumber);
     final quantity = TextEditingController(text: package.quantity);
     final dateReceived = TextEditingController(text: package.dateReceived);
-    final dateShipped = TextEditingController(text: package.dateShipped);
+    // final dateShipped = TextEditingController(text: package.dateShipped);
     final dateDelivered = TextEditingController(text: package.dateDelivered);
-    final trailerNumber = TextEditingController(text: package.trailerNumber);
+    // final trailerNumber = TextEditingController(text: package.trailerNumber);
 
     // final controller = Get.put(PackageController());
     final controller = Get.put(GoogleSheetsController());
@@ -178,7 +176,7 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
 
                       await controller.updateRecord(packageData);
                       Get.to(
-                        () => AdminDashboard(),
+                        () => const AdminDashboard(),
                         transition: Transition.noTransition,
                       );
                     },
@@ -202,15 +200,19 @@ class _UpdatePackageScreen extends State<UpdatePackageScreen> {
                         titleStyle: const TextStyle(fontSize: 20),
                         content: const Padding(
                           padding: EdgeInsets.symmetric(vertical: 15.0),
-                          child:
-                          Text("Are you sure, you want to Delete this Item?", style: TextStyle(fontSize: 20,),),
+                          child: Text(
+                            "Are you sure, you want to Delete this Item?",
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
                         confirm: Expanded(
                           child: ElevatedButton(
                             onPressed: () async {
                               await controller.deletePackage(package);
                               Get.to(
-                                    () => AdminDashboard(),
+                                () => const AdminDashboard(),
                                 transition: Transition.noTransition,
                               );
                             },
