@@ -21,11 +21,13 @@ dependencies:
   flutter_native_splash: ^2.2.16
   get: ^4.6.5
   flutter_svg: ^2.0.0+1
-  fl_chart: ^0.60.0
+  fl_chart: ^0.61.0
   gsheets: ^0.4.2
   uuid: ^3.0.7
   provider: ^6.0.5
   auto_size_text: ^3.0.0
+  syncfusion_flutter_charts: ^21.1.39
+  async: ^2.10.0
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git

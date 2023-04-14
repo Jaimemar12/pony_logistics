@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_screen.dart';
 
@@ -53,7 +55,7 @@ class DrawerMenu extends StatelessWidget {
                 color: textColor,
               ),
               onTap: () {
-                Get.to(() => SubmitPackageScreen(),
+                Get.to(() => SubmitPackageScreen(null),
                     transition: Transition.noTransition);
               },
             ),
@@ -67,7 +69,7 @@ class DrawerMenu extends StatelessWidget {
                 color: textColor,
               ),
               onTap: () {
-                Get.to(() => SearchPackageScreen(),
+                Get.to(() => SearchPackageScreen("1", "", ""),
                     transition: Transition.noTransition);
               },
             ),

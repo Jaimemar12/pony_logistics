@@ -41,6 +41,7 @@ class _LoginFormWidget extends State<LoginFormWidget> {
                     return null;
                   }
                 },
+                textInputAction: TextInputAction.next,
                 controller: controller.email,
                 decoration: const InputDecoration(
                     errorStyle: TextStyle(height: 0),
@@ -58,6 +59,14 @@ class _LoginFormWidget extends State<LoginFormWidget> {
                   }
                 },
                 obscureText: showPassword,
+                textInputAction: TextInputAction.go,
+                onFieldSubmitted: (value) {
+                  if (formKey.currentState!.validate()) {
+                    LoginController.instance.loginUser(
+                        controller.email.text.trim(),
+                        controller.password.text.trim());
+                  }
+                },
                 controller: controller.password,
                 decoration: InputDecoration(
                     errorStyle: const TextStyle(height: 0),

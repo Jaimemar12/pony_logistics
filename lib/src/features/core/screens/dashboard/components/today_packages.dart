@@ -1,17 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/components/responsive.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_screen.dart';
+import 'package:pony_logistics/src/features/core/screens/packages/save.dart';
+import 'package:pony_logistics/src/features/core/screens/packages/search_package_screen.dart';
+import 'package:pony_logistics/src/features/core/screens/packages/update_package_screen.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/sizes.dart';
 
-class Discussions extends StatelessWidget {
+class TodayPackages extends StatelessWidget {
   final List<PackageModel> packages;
 
-  const Discussions(this.packages, {Key? key}) : super(key: key);
+  const TodayPackages(this.packages, {Key? key}) : super(key: key);
 
   List<PackageModel> getTodayPackages(List<PackageModel> packages) {
     var dateFormat = DateFormat('MM/dd/yyyy');
@@ -58,14 +64,25 @@ class Discussions extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              Text(
-                'View All',
-                style: TextStyle(
-                  color: iconColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                ),
-              ),
+              TextButton(
+                  onPressed: () => Get.to(
+                      transition: Transition.noTransition,
+                      () => SearchPackageScreen(
+                          "",
+                          DateFormat('MM/dd/yyyy')
+                              .format(DateTime.now())
+                              .toString(),
+                          DateFormat('MM/dd/yyyy')
+                              .format(DateTime.now())
+                              .toString())),
+                  child: Text(
+                    'View All',
+                    style: TextStyle(
+                      color: iconColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  )),
             ],
           ),
           Flexible(
@@ -104,57 +121,102 @@ class Discussions extends StatelessWidget {
                                       ),
                                       child: Icon(LineAwesomeIcons.box,
                                           color: iconColor)),
-                                  title: AutoSizeText(
-                                    'Part Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateDelivered}',
-                                    maxLines: 7,
-                                    minFontSize: 12,
-                                    maxFontSize: 15,
-                                    style: TextStyle(color: iconColor),
-                                  ),
-                                  minLeadingWidth: 0,
-                                  // Text(
-                                  //     "PN: ${todayPackages[index].partNumber} CNO: ${todayPackages[index].caseNumber} Q: ${todayPackages[index].quantity} DD: ${todayPackages[index].dateDelivered}"),
-                                )),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: iconColor.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    border: const Border(
-                                      bottom: BorderSide(),
-                                      top: BorderSide(),
-                                      left: BorderSide(),
-                                      right: BorderSide(),
-                                    )),
-                                child: ListTile(
-                                  leading: Container(
-                                      height: double.infinity,
-                                      padding: const EdgeInsets.all(6),
+                                  trailing: Container(
+                                    padding: const EdgeInsets.all(1.0),
+                                    child: Container(
+                                      width: 40,
+                                      height: 40,
                                       decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: isDark
-                                            ? tPrimaryColor
-                                            : tAccentColor,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        color: iconColor.withOpacity(0.1),
                                       ),
-                                      child: Icon(LineAwesomeIcons.box,
-                                          color: iconColor)),
+                                      child: IconButton(
+                                        onPressed: () => Get.to(
+                                          () => SubmitPackageScreen(
+                                              todayPackages[index]),
+                                          transition: Transition.noTransition,
+                                        ),
+                                        icon: const Icon(LineAwesomeIcons.edit),
+                                        color: iconColor.withOpacity(0.1),
+                                      ),
+                                    ),
+                                  ),
                                   title: AutoSizeText(
-                                    'Part Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateDelivered}',
-                                    maxLines: 7,
+                                    'Part Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateReceived}',
+                                    maxLines: 8,
                                     minFontSize: 12,
                                     maxFontSize: 15,
                                     style: TextStyle(color: iconColor),
                                   ),
                                   minLeadingWidth: 0,
-
                                   // Text(
                                   //     "PN: ${todayPackages[index].partNumber} CNO: ${todayPackages[index].caseNumber} Q: ${todayPackages[index].quantity} DD: ${todayPackages[index].dateDelivered}"),
                                 )),
                           ),
+                          // const SizedBox(
+                          //   width: 10,
+                          // ),
+                          // Expanded(
+                          //   child: Container(
+                          //       decoration: BoxDecoration(
+                          //           color: iconColor.withOpacity(0.1),
+                          //           borderRadius: BorderRadius.circular(10.0),
+                          //           border: const Border(
+                          //             bottom: BorderSide(),
+                          //             top: BorderSide(),
+                          //             left: BorderSide(),
+                          //             right: BorderSide(),
+                          //           )),
+                          //       child: ListTile(
+                          //         leading: Container(
+                          //             height: double.infinity,
+                          //             padding: const EdgeInsets.all(6),
+                          //             decoration: BoxDecoration(
+                          //               shape: BoxShape.circle,
+                          //               color: isDark
+                          //                   ? tPrimaryColor
+                          //                   : tAccentColor,
+                          //             ),
+                          //             child: Icon(LineAwesomeIcons.box,
+                          //                 color: iconColor)),
+                          //         trailing: Container(
+                          //           padding: const EdgeInsets.all(1.0),
+                          //           child: Container(
+                          //             width: 40,
+                          //             height: 40,
+                          //             decoration: BoxDecoration(
+                          //               borderRadius:
+                          //               BorderRadius.circular(100),
+                          //               color: iconColor.withOpacity(0.1),
+                          //             ),
+                          //             child: IconButton(
+                          //               onPressed: () => Get.to(
+                          //                     () => UpdatePackageScreen(
+                          //                     package:
+                          //                     todayPackages[index]),
+                          //                 transition:
+                          //                 Transition.noTransition,
+                          //               ),
+                          //               icon: const Icon(
+                          //                   LineAwesomeIcons.edit),
+                          //               color: iconColor,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         title: AutoSizeText(
+                          //           'Part Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateReceived}',
+                          //           maxLines: 6,
+                          //           minFontSize: 12,
+                          //           maxFontSize: 15,
+                          //           style: TextStyle(color: iconColor),
+                          //         ),
+                          //         minLeadingWidth: 0,
+                          //
+                          //         // Text(
+                          //         //     "PN: ${todayPackages[index].partNumber} CNO: ${todayPackages[index].caseNumber} Q: ${todayPackages[index].quantity} DD: ${todayPackages[index].dateDelivered}"),
+                          //       )),
+                          // ),
                           // Column(
                           //   children: [
                           //     Container(
@@ -223,9 +285,29 @@ class Discussions extends StatelessWidget {
                                 ),
                                 child: Icon(LineAwesomeIcons.box,
                                     color: iconColor)),
+                            trailing: Container(
+                              padding: const EdgeInsets.all(1.0),
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: iconColor.withOpacity(0.1),
+                                ),
+                                child: IconButton(
+                                  onPressed: () => Get.to(
+                                    () => SubmitPackageScreen(
+                                        todayPackages[index]),
+                                    transition: Transition.noTransition,
+                                  ),
+                                  icon: const Icon(LineAwesomeIcons.edit),
+                                  color: iconColor,
+                                ),
+                              ),
+                            ),
                             title: AutoSizeText(
                               'Part Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateReceived}',
-                              maxLines: 6,
+                              maxLines: 12,
                               minFontSize: 12,
                               maxFontSize: 15,
                               style: TextStyle(color: iconColor),

@@ -4,7 +4,7 @@
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 // import 'package:liquid_swipe/liquid_swipe.dart';
 // import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
-// import 'package:pony_logistics/src/features/core/screens/packages/search_package_content.dart';
+// import 'package:pony_logistics/src/features/core/screens/packages/search_package_content2.dart';
 // import 'package:pony_logistics/src/features/core/screens/packages/update_package_screen.dart';
 // import 'package:pony_logistics/src/features/core/screens/packages/widgets/search.dart';
 //

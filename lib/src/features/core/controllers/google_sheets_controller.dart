@@ -41,8 +41,15 @@ class GoogleSheetsController extends GetxController {
   }
 
   // /// Update Package Data
-  Future<void> updateRecord(PackageModel package) async {
-    await _packageRepo.updatePackageRecord(package);
+  Future<void> updateRecord(
+      PackageModel package,
+      String containerName,
+      String partNumber,
+      String caseNumber,
+      String quantity,
+      String dateReceived) async {
+    await _packageRepo.updatePackageRecord(
+        package, containerName, partNumber, caseNumber, quantity, dateReceived);
   }
 
   Future<List<PackageModel>> getTodayPackages() async =>

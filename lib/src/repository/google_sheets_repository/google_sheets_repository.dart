@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 
-
 class PackageRepository extends GetxController {
   static PackageRepository get instance => Get.find();
 
@@ -52,30 +51,41 @@ class PackageRepository extends GetxController {
   Future<List<PackageModel>> getAllPackages() async {
     if (_packageSheet == null) return <PackageModel>[];
     final snapshot = await _packageSheet!.values.map.allRows();
+    print('Grabbed Packages');
     return snapshot == null
         ? <PackageModel>[]
         : snapshot.map((e) => PackageModel.fromGoogleSnapshot(e)).toList();
   }
 
   /// Update Package details
-  Future<void> updatePackageRecord(PackageModel package) async {
+  Future<void> updatePackageRecord(
+      PackageModel package,
+      String containerName,
+      String partNumber,
+      String caseNumber,
+      String quantity,
+      String dateReceived) async {
     final cellsOfRow =
         await _packageSheet!.cells.rowByKey(package.id.toString());
+    print(package.id);
     if (cellsOfRow == null) return;
     int index = 0;
     for (var cell in cellsOfRow) {
       switch (index) {
         case 0:
-          cell.value = package.partNumber;
+          cell.value = containerName;
           break;
         case 1:
-          cell.value = package.caseNumber;
+          cell.value = partNumber;
           break;
         case 2:
-          cell.value = package.quantity;
+          cell.value = caseNumber;
           break;
         case 3:
-          cell.value = package.dateReceived;
+          cell.value = quantity;
+          break;
+        case 4:
+          cell.value = dateReceived;
           break;
       }
       index++;
@@ -138,6 +148,7 @@ class PackageRepository extends GetxController {
         filteredPackages.add(packages[i]);
       }
     }
+    print('Grabbed Today Packages');
     return filteredPackages;
   }
 }
