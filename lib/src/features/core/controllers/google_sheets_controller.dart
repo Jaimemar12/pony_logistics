@@ -8,9 +8,7 @@ class GoogleSheetsController extends GetxController {
   static GoogleSheetsController get instance => Get.find();
 
   /// Repositories
-  final _authRepo = Get.put(AuthenticationRepository());
-  final _packageRepo = Get.put(PackageRepository());
-
+  final _packageRepo = Get.put(GoogleSheetsRepository());
   final containerName = TextEditingController();
   final partNumber = TextEditingController();
   final caseNumber = TextEditingController();
@@ -31,7 +29,7 @@ class GoogleSheetsController extends GetxController {
       await _packageRepo.getPackagesBetween(startDate, endDate);
 
   Future<void> createPackage(PackageModel package) async {
-    final currentUserEmail = _authRepo.getUserEmail;
+    final currentUserEmail = _packageRepo.getUserEmail;
     if (currentUserEmail != null) {
       await _packageRepo.createPackage(package);
     } else {
@@ -57,7 +55,7 @@ class GoogleSheetsController extends GetxController {
 
   //
   Future<void> deletePackage(PackageModel package) async {
-    final uID = _authRepo.getUserID;
+    final uID = _packageRepo.getUserID;
     if (uID == null) {
       Get.snackbar("Error", "Package cannot be deleted.",
           duration: const Duration(seconds: 2));

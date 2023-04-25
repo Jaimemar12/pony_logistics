@@ -4,6 +4,7 @@ import 'package:pony_logistics/src/features/authentication/models/user_model.dar
 import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
 
 import '../../../repository/authentication_repository/authentication_repository.dart';
+import '../../../repository/google_sheets_repository/google_sheets_repository.dart';
 
 class SignUpController extends GetxController {
   static SignUpController get instance => Get.find();
@@ -18,7 +19,7 @@ class SignUpController extends GetxController {
 
   // Call these Functions from Design & they will do the backend
   Future<String?> registerUser(String email, String password) async {
-    return await AuthenticationRepository.instance
+    return await GoogleSheetsRepository.instance
         .createUserWithEmailAndPassword(email, password)
         .whenComplete(() {
       Get.snackbar("Success", "You account has been created.",

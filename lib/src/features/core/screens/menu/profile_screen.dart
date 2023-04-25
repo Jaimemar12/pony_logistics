@@ -29,7 +29,7 @@ class _ProfileFormScreen extends State<ProfileFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProfileController());
+    final controller = Get.put(UserController());
     final fullName = TextEditingController(text: user.fullName);
     final email = TextEditingController(text: user.email);
     final phoneNo = TextEditingController(text: user.phoneNo);

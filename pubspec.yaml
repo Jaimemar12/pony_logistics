@@ -21,7 +21,7 @@ dependencies:
   flutter_native_splash: ^2.2.16
   get: ^4.6.5
   flutter_svg: ^2.0.0+1
-  fl_chart: ^0.61.0
+  fl_chart: ^0.62.0
   gsheets: ^0.4.2
   uuid: ^3.0.7
   provider: ^6.0.5
@@ -33,12 +33,17 @@ dependencies:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
   intl: ^0.17.0
+  firedart: ^0.9.1+1
+  camera: ^0.10.4
+  google_mlkit_text_recognition: ^0.6.0
+  permission_handler: ^10.2.0
+  flutter_speed_dial: ^6.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
   android: "launcher_icon"

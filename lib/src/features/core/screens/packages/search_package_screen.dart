@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/core/controllers/google_sheets_controller.dart';
+import 'package:pony_logistics/src/features/core/controllers/profile_controller.dart';
 import 'package:pony_logistics/src/features/core/controllers/text_controller.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_screen.dart';
 import 'package:pony_logistics/src/features/core/screens/packages/update_package_screen.dart';
+import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
@@ -35,6 +37,7 @@ class _SearchPackageScreen extends State<SearchPackageScreen> {
   String partNumber;
   bool rebuild = true;
   final packageController = GoogleSheetsController();
+  late String? userName;
   late Future<List<PackageModel>> between;
   late Future<List<PackageModel>> packages;
 
@@ -50,9 +53,11 @@ class _SearchPackageScreen extends State<SearchPackageScreen> {
     var textColor = isDark ? tPrimaryColor : tAccentColor;
 
     getFuture() {
-      print(partNumber);
-      print(rebuild);
       if (rebuild) {
+        UserController().getUserName().then((value) => setState((){
+          userName = value;
+          Future.delayed(const Duration(seconds: 2));
+        }));
         setState(() {
           between = (startDate == "" || endDate == "")
               ? packageController.getPackagesBetween(
@@ -217,7 +222,7 @@ class _SearchPackageScreen extends State<SearchPackageScreen> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: appPadding / 2),
                                             child: Text(
-                                              'Hi, FIX LATER',
+                                              'Hi, $userName',
                                               style: TextStyle(
                                                 color: textColor,
                                                 fontWeight: FontWeight.w800,

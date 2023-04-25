@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pony_logistics/src/features/core/screens/packages/search_package_screen.dart';
+import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../../controllers/google_sheets_controller.dart';
-import 'components/analytic_cards.dart';
 import 'components/today_packages.dart';
 import 'components/drawer_menu.dart';
 import 'components/responsive.dart';
@@ -17,11 +16,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 import 'package:pony_logistics/src/features/core/controllers/profile_controller.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/components/top_referrals.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/components/users.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/components/users_by_device.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/components/viewers.dart';
-import 'package:pony_logistics/src/features/core/screens/menu/menu_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -38,12 +33,12 @@ class _AdminDashboard extends State<AdminDashboard> {
   late Future<List<dynamic>> data;
 
   Future<List<dynamic>> getList() async {
-    final userController = ProfileController();
+    final userController = UserController();
     List<PackageModel> packages = await packageController.getAllPackages();
-    UserModel? user = await userController.getUserData();
+    String? userName = await userController.getUserName();
     var temp = [];
     temp.add(packages);
-    temp.add(user);
+    temp.add(userName);
     return Future.value(temp);
   }
 
@@ -59,6 +54,7 @@ class _AdminDashboard extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var textColor = isDark ? tPrimaryColor : tAccentColor;
+    Get.put(GoogleSheetsRepository());
 
     return Scaffold(
       backgroundColor:
@@ -82,7 +78,7 @@ class _AdminDashboard extends State<AdminDashboard> {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       List<PackageModel> packages = snapshot.data![0];
-                      UserModel user = snapshot.data![1];
+                      String userName = snapshot.data![1];
 
                       return SafeArea(
                         child: SingleChildScrollView(
@@ -169,7 +165,7 @@ class _AdminDashboard extends State<AdminDashboard> {
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: appPadding / 2),
                                             child: Text(
-                                              'Hi, ${user.fullName}',
+                                              'Hi, ${userName}',
                                               style: TextStyle(
                                                 color: textColor,
                                                 fontWeight: FontWeight.w800,

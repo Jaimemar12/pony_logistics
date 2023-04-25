@@ -1,13 +1,14 @@
 import 'package:get/get.dart';
 import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
 import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
 
-class ProfileController extends GetxController {
-  static ProfileController get instance => Get.find();
+class UserController extends GetxController {
+  static UserController get instance => Get.find();
 
   /// Repositories
-  final _authRepo = Get.put(AuthenticationRepository());
+  final _authRepo = Get.put(GoogleSheetsRepository());
   final _userRepo = Get.put(UserRepository());
 
   /// Get User Email and pass to UserRepository to fetch user record.
@@ -15,6 +16,18 @@ class ProfileController extends GetxController {
     final currentUserEmail = _authRepo.getUserEmail;
     if (currentUserEmail != null) {
       return _userRepo.getUserDetails(currentUserEmail);
+    } else {
+      Get.snackbar("Error", "Login to continue",
+          duration: const Duration(seconds: 2));
+      return null;
+    }
+  }
+
+  Future<String?> getUserName() async {
+    final currentUserEmail = _authRepo.getUserEmail;
+    if (currentUserEmail != null) {
+      UserModel? currentUser = await _userRepo.getUserDetails(currentUserEmail);
+      return currentUser?.fullName;
     } else {
       Get.snackbar("Error", "Login to continue",
           duration: const Duration(seconds: 2));

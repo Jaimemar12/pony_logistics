@@ -17,7 +17,7 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    final controller = Get.put(ProfileController());
+    final controller = Get.put(UserController());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

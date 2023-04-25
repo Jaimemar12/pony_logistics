@@ -14,15 +14,27 @@ class LogInWithEmailAndPasswordFailure implements Exception {
       case 'invalid-email':
         return const LogInWithEmailAndPasswordFailure(
             'Email is not valid or badly formatted.');
+      case 'AuthException: INVALID_EMAIL':
+        return const LogInWithEmailAndPasswordFailure(
+            'Email is not valid or badly formatted.');
       case 'user-disabled':
         return const LogInWithEmailAndPasswordFailure(
             'This user has been disabled. Please contact support for help.');
       case 'user-not-found':
         return const LogInWithEmailAndPasswordFailure(
             'Email is not found, please create an account.');
+      case 'AuthException: EMAIL_NOT_FOUND':
+        return const LogInWithEmailAndPasswordFailure(
+            'Email is not found, please create an account.');
       case 'wrong-password':
         return const LogInWithEmailAndPasswordFailure(
             'Incorrect password, please try again.');
+      case 'AuthException: INVALID_PASSWORD':
+        return const LogInWithEmailAndPasswordFailure(
+            'Incorrect password, please try again.');
+      case 'AuthException: TOO_MANY_ATTEMPTS_TRY_LATER':
+        return const LogInWithEmailAndPasswordFailure(
+            'You have done too many attempts, please try again later.');
       default:
         return const LogInWithEmailAndPasswordFailure();
     }

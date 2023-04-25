@@ -38,7 +38,7 @@ class _GraphScreen extends State<GraphScreen> {
   late Future<List<dynamic>> data;
 
   Future<List<dynamic>> getList() async {
-    final userController = ProfileController();
+    final userController = UserController();
     List<PackageModel> packages = await packageController.getAllPackages();
     UserModel? user = await userController.getUserData();
     var temp = [];

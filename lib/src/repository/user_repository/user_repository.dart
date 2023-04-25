@@ -81,10 +81,10 @@ class UserRepository extends GetxController {
   // }
 
   Future<UserModel?> getUserDetails(String email) async {
-    var packages = await getAllUsers();
-    for (int i = 0; i < packages.length; i++) {
-      if (email == packages[i].email) {
-        return packages[i];
+    var users = await getAllUsers();
+    for (int i = 0; i < users.length; i++) {
+      if (email == users[i].email) {
+        return users[i];
       }
     }
     return null;

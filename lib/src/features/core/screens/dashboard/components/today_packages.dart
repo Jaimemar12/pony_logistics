@@ -56,12 +56,14 @@ class TodayPackages extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Today\'s Packages',
-                style: TextStyle(
-                  color: iconColor,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15,
+              Expanded(
+                child: Text(
+                  'Today\'s Packages',
+                  style: TextStyle(
+                    color: iconColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
                 ),
               ),
               TextButton(

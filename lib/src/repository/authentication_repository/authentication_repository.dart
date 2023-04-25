@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:pony_logistics/src/features/authentication/screens/welcome/welcome_screen.dart';
 
 import '../../features/core/screens/dashboard/admin_dashboard.dart';
-import 'exceptions/login_with_email_and_pssword_failure.dart';
-import 'exceptions/signup_email_password_failure.dart';
+import '../google_sheets_repository/exceptions/login_with_email_and_pssword_failure.dart';
+import '../google_sheets_repository/exceptions/signup_email_password_failure.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();

@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/authentication/controllers/login_controller.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
+import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
 import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
 import '../../forget_password/forget_password_options/forget_password_model_bottom_sheet.dart';
@@ -23,6 +27,7 @@ class _LoginFormWidget extends State<LoginFormWidget> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
+    Get.put(GoogleSheetsRepository());
     final formKey = GlobalKey<FormState>();
 
     return Form(
@@ -60,11 +65,16 @@ class _LoginFormWidget extends State<LoginFormWidget> {
                 },
                 obscureText: showPassword,
                 textInputAction: TextInputAction.go,
-                onFieldSubmitted: (value) {
+                onFieldSubmitted: (value) async {
                   if (formKey.currentState!.validate()) {
-                    LoginController.instance.loginUser(
+                    String? result = await GoogleSheetsRepository
+                        .loginWithEmailAndPasswordWindows(
                         controller.email.text.trim(),
                         controller.password.text.trim());
+                    if (result == 'Success') {
+                      Get.to(() => const AdminDashboard(),
+                          transition: Transition.noTransition);
+                    }
                   }
                 },
                 controller: controller.password,
@@ -99,11 +109,16 @@ class _LoginFormWidget extends State<LoginFormWidget> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      LoginController.instance.loginUser(
-                          controller.email.text.trim(),
-                          controller.password.text.trim());
+                      String? result = await GoogleSheetsRepository
+                          .loginWithEmailAndPasswordWindows(
+                              controller.email.text.trim(),
+                              controller.password.text.trim());
+                      if (result == 'Success') {
+                        Get.to(() => const AdminDashboard(),
+                            transition: Transition.noTransition);
+                      }
                     }
                   },
                   child: Text(tLogin.toUpperCase()),

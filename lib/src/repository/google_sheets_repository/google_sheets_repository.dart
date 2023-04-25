@@ -1,10 +1,17 @@
+import 'package:firedart/auth/firebase_auth.dart' as Firedart;
+import 'package:firedart/firedart.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 
-class PackageRepository extends GetxController {
-  static PackageRepository get instance => Get.find();
+import '../../features/authentication/screens/welcome/welcome_screen.dart';
+import '../../features/core/screens/dashboard/admin_dashboard.dart';
+import 'exceptions/login_with_email_and_pssword_failure.dart';
+import 'exceptions/signup_email_password_failure.dart';
+
+class GoogleSheetsRepository extends GetxController {
+  static GoogleSheetsRepository get instance => Get.find();
 
   static const _credentials = r'''
 {
@@ -24,8 +31,19 @@ class PackageRepository extends GetxController {
   static const _spreadsheetId = '1hdKnI4OXB_TqqMbugXrGO08tXl8adJYZw-Q9fUQaw-Y';
   static final _gSheets = GSheets(_credentials);
   static Worksheet? _packageSheet;
+  static final _auth = Firedart.FirebaseAuth.instance;
+  static late var _firebaseUser;
+
+  String? get getUserID => _auth.userId;
+  String? get getUserEmail => _firebaseUser.email;
+
+  static setUser() async {
+    _firebaseUser = await _auth.getUser();
+  }
 
   static Future init() async {
+    FirebaseAuth.initialize('AIzaSyAg9KXa-uLM-1fe8glR-lAAvq44cq3spPc', VolatileStore());
+    Firestore.initialize('pony-logistics');
     final spreadsheet = await _gSheets.spreadsheet(_spreadsheetId);
     _packageSheet = await _getWorksheet(spreadsheet, title: 'Packages');
   }
@@ -150,5 +168,47 @@ class PackageRepository extends GetxController {
     }
     print('Grabbed Today Packages');
     return filteredPackages;
+  }
+
+  /// Email Authentication Windows - LOGIN
+  static Future<String?> loginWithEmailAndPasswordWindows(
+      String email, String password) async {
+    try {
+      await _auth.signIn(email,password);
+      await setUser();
+    } on Exception catch (e) {
+      print(e.toString());
+      final ex = LogInWithEmailAndPasswordFailure.fromCode(e.toString());
+      return ex.message;
+    } catch (_) {
+      const ex = LogInWithEmailAndPasswordFailure();
+      return ex.message;
+    }
+    return 'Success';
+  }
+
+  Future<String?> createUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      await _auth.signUp(email, password);
+      await setUser();
+      print(_firebaseUser.email);
+      _firebaseUser != null
+          ? Get.to(
+            () => const AdminDashboard(),
+        transition: Transition.noTransition,
+      )
+          : Get.to(
+            () => const WelcomeScreen(),
+        transition: Transition.noTransition,
+      );
+    } on Exception catch (e) {
+      final ex = SignUpWithEmailAndPasswordFailure.code(e.toString());
+      return ex.message;
+    } catch (_) {
+      const ex = SignUpWithEmailAndPasswordFailure();
+      return ex.message;
+    }
+    return null;
   }
 }
