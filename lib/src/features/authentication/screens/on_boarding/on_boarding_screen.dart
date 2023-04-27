@@ -13,6 +13,10 @@ class OnBoardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final obController = OnBoardingController();
     return Scaffold(
+      backgroundColor:
+      MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? tAccentColor
+          : tPrimaryColor,
       body: Stack(
         alignment: Alignment.center,
         children: [

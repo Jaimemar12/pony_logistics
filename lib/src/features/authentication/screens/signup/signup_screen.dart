@@ -4,6 +4,7 @@ import 'package:pony_logistics/src/constants/text_strings.dart';
 import 'package:pony_logistics/src/features/authentication/screens/signup/widgets/signup_footer_widget.dart';
 import 'package:pony_logistics/src/features/authentication/screens/signup/widgets/signup_form_widget.dart';
 import '../../../../common_widgets/form/form_header_widget.dart';
+import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -13,6 +14,10 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor:
+        MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? tAccentColor
+            : tPrimaryColor,
         appBar: AppBar(),
         body: SingleChildScrollView(
           child: Container(

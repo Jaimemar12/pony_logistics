@@ -34,4 +34,9 @@ class LoginController extends GetxController {
       ));
     }
   }
+
+  void clear(){
+    email.clear();
+    password.clear();
+  }
 }

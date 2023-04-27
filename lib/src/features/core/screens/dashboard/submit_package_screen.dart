@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -55,36 +54,23 @@ class _SubmitPackageScreen extends State<SubmitPackageScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        if(isDialOpen.value) {
+        if (isDialOpen.value) {
           isDialOpen.value = false;
           return false;
         }
         return true;
       },
       child: Scaffold(
-        floatingActionButton: SpeedDial(
-          animatedIcon: AnimatedIcons.menu_close,
-          backgroundColor: iconColor,
-          overlayColor: Colors.black,
-          overlayOpacity: .4,
-          spaceBetweenChildren: 10,
-          openCloseDial: isDialOpen,
-          childrenButtonSize: Size(55, 55),
-          children: [
-            SpeedDialChild(
-              child: Icon(LineAwesomeIcons.camera),
-              backgroundColor: !isDark ? tPrimaryColor : tAccentColor,
-              onTap: () {
-                Get.to(() => ScanPictureScreen(),
-                    transition:
-                    Transition.noTransition);
-              }
-            ),
-            SpeedDialChild(
-                child: Icon(LineAwesomeIcons.photo_video),
-                backgroundColor: !isDark ? tPrimaryColor : tAccentColor
-            )
-          ],
+        floatingActionButton: FloatingActionButton(
+          backgroundColor:
+              MediaQuery.of(context).platformBrightness != Brightness.dark
+                  ? tAccentColor
+                  : tPrimaryColor,
+          onPressed: () {
+            Get.to(() => ScanPictureScreen(),
+                transition: Transition.noTransition);
+          },
+          child: Icon(LineAwesomeIcons.camera),
         ),
         backgroundColor:
             MediaQuery.of(context).platformBrightness == Brightness.dark
@@ -362,8 +348,10 @@ class _SubmitPackageScreen extends State<SubmitPackageScreen> {
                                         setState(() {
                                           packageController.containerName.text =
                                               "";
-                                          packageController.partNumber.text = "";
-                                          packageController.caseNumber.text = "";
+                                          packageController.partNumber.text =
+                                              "";
+                                          packageController.caseNumber.text =
+                                              "";
                                           packageController.quantity.text = "";
                                           packageController.dateReceived.text =
                                               "";

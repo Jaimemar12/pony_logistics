@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/firebase_options.dart';
+import 'package:pony_logistics/src/constants/colors.dart';
 import 'package:pony_logistics/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
@@ -35,6 +36,13 @@ Future<void> main() async {
         setWindowTitle('Pony Logistics');
       }
     });
+  }
+
+  if(Platform.isAndroid) {
+    final Brightness brightness = WidgetsBinding.instance.window.platformBrightness;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: brightness == Brightness.light ? tPrimaryColor : tAccentColor, // change the color to your desired color
+    ));
   }
 
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

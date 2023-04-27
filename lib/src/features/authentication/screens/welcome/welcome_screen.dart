@@ -20,7 +20,10 @@ class WelcomeScreen extends StatelessWidget {
 
     return SafeArea(
         child: Scaffold(
-      backgroundColor: isDarkMode ? tSecondaryColor : tPrimaryColor,
+      backgroundColor:
+          MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? tAccentColor
+              : tPrimaryColor,
       body: Container(
         padding: const EdgeInsets.all(tDefaultSize),
         child: Column(

@@ -37,7 +37,7 @@ dependencies:
   camera: ^0.10.4
   google_mlkit_text_recognition: ^0.6.0
   permission_handler: ^10.2.0
-  flutter_speed_dial: ^6.2.0
+  image_cropper: ^3.0.3
 
 dev_dependencies:
   flutter_test:

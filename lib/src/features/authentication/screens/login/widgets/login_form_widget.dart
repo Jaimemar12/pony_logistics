@@ -72,6 +72,7 @@ class _LoginFormWidget extends State<LoginFormWidget> {
                         controller.email.text.trim(),
                         controller.password.text.trim());
                     if (result == 'Success') {
+                      controller.clear();
                       Get.to(() => const AdminDashboard(),
                           transition: Transition.noTransition);
                     }
@@ -116,6 +117,7 @@ class _LoginFormWidget extends State<LoginFormWidget> {
                               controller.email.text.trim(),
                               controller.password.text.trim());
                       if (result == 'Success') {
+                        controller.clear();
                         Get.to(() => const AdminDashboard(),
                             transition: Transition.noTransition);
                       }

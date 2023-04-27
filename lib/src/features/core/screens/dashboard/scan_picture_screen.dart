@@ -5,11 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
+import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/result_screen.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_screen.dart';
 
-import 'components/drawer_menu.dart';
+import '../../../../constants/colors.dart';
 
 class ScanPictureScreen extends StatefulWidget {
   const ScanPictureScreen({Key? key}) : super(key: key);
@@ -110,20 +115,65 @@ class _ScanPictureScreen extends State<ScanPictureScreen>
 
   Future<void> _scanImage() async {
     if (_cameraController == null) return;
-    
+
+    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     try {
       final pictureFile = await _cameraController!.takePicture();
 
-      final file = File(pictureFile.path);
+      CroppedFile? croppedFile = await ImageCropper().cropImage(
+        sourcePath: pictureFile.path,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Crop Image',
+              toolbarColor: isDark ? tPrimaryColor : tAccentColor,
+              toolbarWidgetColor: !isDark ? tPrimaryColor : tAccentColor,
+              initAspectRatio: CropAspectRatioPreset.original,
+              hideBottomControls: true,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Crop Image',
+          ),
+          WebUiSettings(
+            context: context,
+          ),
+        ],
+      );
+
+      if (croppedFile == null) {
+        return;
+      }
+
+      final file = File(croppedFile.path);
 
       final inputImage = InputImage.fromFile(file);
       final recognizedText = await textRecognizer.processImage(inputImage);
-      Get.to( () {
-        ResultScreen(text: recognizedText.text);
-      }, transition: Transition.noTransition);
+      List<String> textList =
+          recognizedText.text.removeAllWhitespace.split('\n');
+      String partNumber = '';
+      String caseNumber = textList[textList.length - 2];
+      String quantity = textList[textList.length - 1].numericOnly();
+
+      for (var element in textList) {
+        if(element.numericOnly().isNumericOnly){
+          partNumber = element.numericOnly();
+          break;
+        }
+      }
+
+      PackageModel package = PackageModel(
+          containerName: '',
+          partNumber: partNumber,
+          caseNumber: caseNumber,
+          quantity: quantity,
+          dateReceived:
+              DateFormat('MM/dd/yyyy').format(DateTime.now()).toString());
+
+      imageCache.clear();
+      Get.to( () => SubmitPackageScreen(package), transition: Transition.noTransition);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('An error occurred when scanning text'),
         ),
       );
@@ -154,27 +204,47 @@ class _ScanPictureScreen extends State<ScanPictureScreen>
               ),
             Scaffold(
               backgroundColor: _isPermissionGranted ? Colors.transparent : null,
-              body: _isPermissionGranted ? Column(
-                children: [
-                  Expanded(child: Container()),
-                  Container(padding: EdgeInsets.only(left: appPadding, right: appPadding),
-                  child: Center(
-                    child: ElevatedButton(
-                      onPressed: _scanImage, child: const Icon(Icons.camera),
+              body: _isPermissionGranted
+                  ? Column(
+                      children: [
+                        Expanded(child: Container()),
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: appPadding, right: appPadding),
+                          child: Center(
+                            child: ElevatedButton(
+                              onPressed: _scanImage,
+                              child: const Icon(Icons.camera),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  : Center(
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: appPadding, right: appPadding),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Camera Permission Denied',
+                              textAlign: TextAlign.center,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Get.to(() => AdminDashboard(),
+                                    transition: Transition.noTransition);
+                              },
+                              child: Text('Return home'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),)
-                ],
-              ) : Center(
-                child: Container(
-                  padding: EdgeInsets.only(left: appPadding, right: appPadding),
-                  child: Text('Camera Permission Denied',
-                  textAlign: TextAlign.center,),
-                ),
-              ),
             )
           ],
         );
-
       },
     );
   }
