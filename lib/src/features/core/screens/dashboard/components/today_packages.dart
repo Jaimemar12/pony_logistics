@@ -147,7 +147,7 @@ class TodayPackages extends StatelessWidget {
                                     ),
                                   ),
                                   title: AutoSizeText(
-                                    'Part Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateReceived}',
+                                    'Container Name: ${todayPackages[index].containerName}\nPart Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateReceived}',
                                     maxLines: 8,
                                     minFontSize: 12,
                                     maxFontSize: 15,
@@ -312,7 +312,7 @@ class TodayPackages extends StatelessWidget {
                               ),
                             ),
                             title: AutoSizeText(
-                              'Part Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateReceived}',
+                              'Container Name: ${todayPackages[index].containerName}\nPart Number: ${todayPackages[index].partNumber}\nCase Number: ${todayPackages[index].caseNumber}\nQuantity: ${todayPackages[index].quantity}\nDate Received: ${todayPackages[index].dateReceived}',
                               maxLines: 12,
                               minFontSize: 12,
                               maxFontSize: 15,

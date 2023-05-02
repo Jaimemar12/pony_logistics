@@ -110,130 +110,148 @@ class _ShipPackageScreen extends State<ShipPackageScreen> {
                                         color: textColor,
                                       ),
                                     ),
-                                  Form(
-                                      key: formKey,
-                                      child: Flexible(
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: TextFormField(
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: packageController
-                                                    .partNumber,
-                                                keyboardType:
-                                                    const TextInputType
-                                                            .numberWithOptions(
-                                                        decimal: false),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return "";
-                                                  } else {
-                                                    return null;
-                                                  }
-                                                },
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter
-                                                      .allow(RegExp('[0-9]')),
-                                                ],
-                                                decoration: InputDecoration(
-                                                    errorStyle: const TextStyle(
-                                                        height: 0),
-                                                    label:
-                                                        const Text(tPartNumber),
-                                                    prefixIcon: Icon(
-                                                      LineAwesomeIcons
-                                                          .slack_hashtag,
-                                                      color: iconColor,
-                                                    ),
-                                                    border: const OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10.0))),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                Radius.circular(
-                                                                    10.0)),
-                                                        borderSide: BorderSide(
-                                                            color: textColor,
-                                                            width: 1.0))),
+                                  if (Responsive.isDesktop(context) ||
+                                      Responsive.isTablet(context))
+                                    Form(
+                                        key: formKey,
+                                        child: Flexible(
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: packageController
+                                                      .partNumber,
+                                                  keyboardType:
+                                                      const TextInputType
+                                                              .numberWithOptions(
+                                                          decimal: false),
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return "";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .allow(RegExp('[0-9]')),
+                                                  ],
+                                                  decoration: InputDecoration(
+                                                      errorStyle:
+                                                          const TextStyle(
+                                                              height: 0),
+                                                      label: const Text(
+                                                        tPartNumber,
+                                                        style: TextStyle(
+                                                            fontSize: 11),
+                                                      ),
+                                                      prefixIcon: Icon(
+                                                        LineAwesomeIcons
+                                                            .slack_hashtag,
+                                                        color: iconColor,
+                                                      ),
+                                                      border: const OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      10.0))),
+                                                      focusedBorder: OutlineInputBorder(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color:
+                                                                      textColor,
+                                                                  width: 1.0))),
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Expanded(
-                                              child: TextFormField(
-                                                textInputAction:
-                                                    TextInputAction.go,
-                                                onFieldSubmitted: (value) {
-                                                  if (formKey.currentState!
-                                                      .validate()) {
-                                                    setState(() {
-                                                      rebuild = true;
-                                                      partNumber =
-                                                          packageController
-                                                              .partNumber
-                                                              .value
-                                                              .text;
-                                                      caseNumber =
-                                                          packageController
-                                                              .caseNumber
-                                                              .value
-                                                              .text;
-                                                    });
-                                                    refresh();
-                                                  }
-                                                },
-                                                controller: packageController
-                                                    .caseNumber,
-                                                keyboardType:
-                                                    const TextInputType
-                                                            .numberWithOptions(
-                                                        decimal: false),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return "";
-                                                  } else {
-                                                    return null;
-                                                  }
-                                                },
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter
-                                                      .allow(RegExp('[0-9]')),
-                                                ],
-                                                decoration: InputDecoration(
-                                                    errorStyle: const TextStyle(
-                                                        height: 0),
-                                                    label:
-                                                        const Text(tCaseNumber),
-                                                    prefixIcon: Icon(
-                                                      LineAwesomeIcons
-                                                          .slack_hashtag,
-                                                      color: iconColor,
-                                                    ),
-                                                    border: const OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10.0))),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                Radius.circular(
-                                                                    10.0)),
-                                                        borderSide: BorderSide(
-                                                            color: textColor,
-                                                            width: 1.0))),
+                                              SizedBox(
+                                                width: 10,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      )),
+                                              Expanded(
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.go,
+                                                  onFieldSubmitted: (value) {
+                                                    if (formKey.currentState!
+                                                        .validate()) {
+                                                      setState(() {
+                                                        rebuild = true;
+                                                        partNumber =
+                                                            packageController
+                                                                .partNumber
+                                                                .value
+                                                                .text;
+                                                        caseNumber =
+                                                            packageController
+                                                                .caseNumber
+                                                                .value
+                                                                .text;
+                                                      });
+                                                      refresh();
+                                                    }
+                                                  },
+                                                  controller: packageController
+                                                      .caseNumber,
+                                                  keyboardType:
+                                                      const TextInputType
+                                                              .numberWithOptions(
+                                                          decimal: false),
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return "";
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .allow(RegExp('[0-9]')),
+                                                  ],
+                                                  decoration: InputDecoration(
+                                                      errorStyle:
+                                                          const TextStyle(
+                                                              height: 0),
+                                                      label: const Text(
+                                                        tCaseNumber,
+                                                        style: TextStyle(
+                                                            fontSize: 13),
+                                                      ),
+                                                      prefixIcon: Icon(
+                                                        LineAwesomeIcons
+                                                            .slack_hashtag,
+                                                        color: iconColor,
+                                                      ),
+                                                      border: const OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      10.0))),
+                                                      focusedBorder: OutlineInputBorder(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0)),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color:
+                                                                      textColor,
+                                                                  width: 1.0))),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )),
+                                  if (Responsive.isMobile(context))
+                                    Expanded(child: SizedBox()),
                                   IconButton(
                                       hoverColor: Colors.transparent,
                                       onPressed: () {
@@ -252,32 +270,134 @@ class _ShipPackageScreen extends State<ShipPackageScreen> {
                                         LineAwesomeIcons.search,
                                         color: textColor,
                                       )),
-                                  if(Responsive.isDesktop(context))
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: appPadding,
-                                      vertical: appPadding / 2,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          child: Image.asset(
-                                            'assets/images/photo3.jpg',
-                                            height: 38,
-                                            width: 38,
-                                            fit: BoxFit.cover,
+                                  if (Responsive.isDesktop(context))
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: appPadding,
+                                        vertical: appPadding / 2,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            child: Image.asset(
+                                              'assets/images/photo3.jpg',
+                                              height: 38,
+                                              width: 38,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
+                                        ],
+                                      ),
+                                    )
                                 ],
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              if (Responsive.isMobile(context))
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              if (Responsive.isMobile(context))
+                              Form(
+                                  key: formKey,
+                                  child: Column(
+                                    children: [
+                                      TextFormField(
+                                        textInputAction: TextInputAction.next,
+                                        controller:
+                                            packageController.partNumber,
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(decimal: false),
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return "";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp('[0-9]')),
+                                        ],
+                                        decoration: InputDecoration(
+                                            errorStyle:
+                                                const TextStyle(height: 0),
+                                            label: const Text(
+                                              tPartNumber,
+                                              style: TextStyle(fontSize: 11),
+                                            ),
+                                            prefixIcon: Icon(
+                                              LineAwesomeIcons.slack_hashtag,
+                                              color: iconColor,
+                                            ),
+                                            border: const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10.0))),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(10.0)),
+                                                borderSide: BorderSide(
+                                                    color: textColor,
+                                                    width: 1.0))),
+                                      ),
+                                      const SizedBox(height: tFormHeight - 20),
+                                      TextFormField(
+                                        textInputAction: TextInputAction.go,
+                                        onFieldSubmitted: (value) {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            setState(() {
+                                              rebuild = true;
+                                              partNumber = packageController
+                                                  .partNumber.value.text;
+                                              caseNumber = packageController
+                                                  .caseNumber.value.text;
+                                            });
+                                            refresh();
+                                          }
+                                        },
+                                        controller:
+                                            packageController.caseNumber,
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(decimal: false),
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return "";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp('[0-9]')),
+                                        ],
+                                        decoration: InputDecoration(
+                                            errorStyle:
+                                                const TextStyle(height: 0),
+                                            label: const Text(
+                                              tCaseNumber,
+                                              style: TextStyle(fontSize: 13),
+                                            ),
+                                            prefixIcon: Icon(
+                                              LineAwesomeIcons.slack_hashtag,
+                                              color: iconColor,
+                                            ),
+                                            border: const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10.0))),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(10.0)),
+                                                borderSide: BorderSide(
+                                                    color: textColor,
+                                                    width: 1.0))),
+                                      ),
+                                    ],
+                                  )),
+                              if (Responsive.isMobile(context))
+                              const SizedBox(height: tFormHeight - 20),
                               ListView.builder(
                                   scrollDirection: Axis.vertical,
                                   controller: scrollController,
@@ -289,9 +409,9 @@ class _ShipPackageScreen extends State<ShipPackageScreen> {
                                         Container(
                                             decoration: BoxDecoration(
                                                 color:
-                                                iconColor.withOpacity(0.1),
+                                                    iconColor.withOpacity(0.1),
                                                 borderRadius:
-                                                BorderRadius.circular(10.0),
+                                                    BorderRadius.circular(10.0),
                                                 border: const Border(
                                                   bottom: BorderSide(),
                                                   top: BorderSide(),
@@ -302,7 +422,7 @@ class _ShipPackageScreen extends State<ShipPackageScreen> {
                                               leading: Container(
                                                   height: double.infinity,
                                                   padding:
-                                                  const EdgeInsets.all(6),
+                                                      const EdgeInsets.all(6),
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     color: isDark
@@ -312,27 +432,27 @@ class _ShipPackageScreen extends State<ShipPackageScreen> {
                                                   child: Icon(
                                                       LineAwesomeIcons.box,
                                                       color: result?[index]
-                                                          .status ==
-                                                          'Available'
+                                                                  .status ==
+                                                              'Available'
                                                           ? Colors.green
                                                           : Colors.red)),
                                               trailing: Container(
                                                 padding:
-                                                const EdgeInsets.all(1.0),
+                                                    const EdgeInsets.all(1.0),
                                                 child: Container(
                                                   width: 40,
                                                   height: 40,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        100),
+                                                        BorderRadius.circular(
+                                                            100),
                                                     color: isDark
                                                         ? tPrimaryColor
                                                         : tAccentColor,
                                                   ),
                                                   child: IconButton(
                                                     onPressed: () => Get.to(
-                                                          () => SubmitPackageScreen(
+                                                      () => SubmitPackageScreen(
                                                           result?[index],
                                                           'ship'),
                                                       transition: Transition
@@ -353,119 +473,138 @@ class _ShipPackageScreen extends State<ShipPackageScreen> {
                                                 TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: 'Part Number: ',
+                                                      text: 'Container Name: ',
                                                       style: TextStyle(
                                                         color:
-                                                        textColor, // set the color you want
+                                                            textColor, // set the color you want
                                                       ),
                                                     ),
                                                     TextSpan(
                                                       text:
-                                                      '${result?[index].partNumber} ',
+                                                          '${result?[index].containerName} ',
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight.w500,
+                                                              FontWeight.w500,
                                                           decoration: TextDecoration
                                                               .underline // set the color you want
+                                                          ),
+                                                    ),
+                                                    TextSpan(
+                                                      text: 'Part Number: ',
+                                                      style: TextStyle(
+                                                        color:
+                                                            textColor, // set the color you want
                                                       ),
+                                                    ),
+                                                    TextSpan(
+                                                      text:
+                                                          '${result?[index].partNumber} ',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          decoration: TextDecoration
+                                                              .underline // set the color you want
+                                                          ),
                                                     ),
                                                     TextSpan(
                                                       text: 'Case Number: ',
                                                       style: TextStyle(
                                                         color:
-                                                        textColor, // set the color you want
+                                                            textColor, // set the color you want
                                                       ),
                                                     ),
                                                     TextSpan(
                                                       text:
-                                                      '${result?[index].caseNumber}',
+                                                          '${result?[index].caseNumber}',
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight.w500,
+                                                              FontWeight.w500,
                                                           decoration: TextDecoration
                                                               .underline // set the color you want
-                                                      ),
+                                                          ),
                                                     ),
                                                     TextSpan(
                                                       text: '\tQuantity: ',
                                                       style: TextStyle(
                                                         color:
-                                                        textColor, // set the color you want
+                                                            textColor, // set the color you want
                                                       ),
                                                     ),
                                                     TextSpan(
                                                       text:
-                                                      '${result?[index].quantity}',
+                                                          '${result?[index].quantity}',
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight.w500,
+                                                              FontWeight.w500,
                                                           decoration: TextDecoration
                                                               .underline // set the color you want
-                                                      ),
+                                                          ),
                                                     ),
                                                     TextSpan(
                                                       text: '\tDate Received: ',
                                                       style: TextStyle(
                                                         color:
-                                                        textColor, // set the color you want
+                                                            textColor, // set the color you want
                                                       ),
                                                     ),
                                                     TextSpan(
                                                       text:
-                                                      '${result?[index].dateReceived}',
+                                                          '${result?[index].dateReceived}',
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight.w500,
+                                                              FontWeight.w500,
                                                           decoration: TextDecoration
                                                               .underline // set the color you want
-                                                      ),
+                                                          ),
                                                     ),
                                                     TextSpan(
                                                       text: '\tDate Shipped: ',
                                                       style: TextStyle(
                                                         color:
-                                                        textColor, // set the color you want
+                                                            textColor, // set the color you want
                                                       ),
                                                     ),
                                                     TextSpan(
                                                       text:
-                                                      '${result?[index].dateShipped}',
+                                                          '${result?[index].dateShipped}',
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight.w500,
+                                                              FontWeight.w500,
                                                           decoration: TextDecoration
                                                               .underline // set the color you want
-                                                      ),
+                                                          ),
                                                     ),
                                                     TextSpan(
-                                                      text: '\tTrailer Number: ',
+                                                      text:
+                                                          '\tTrailer Number: ',
                                                       style: TextStyle(
                                                         color:
-                                                        textColor, // set the color you want
+                                                            textColor, // set the color you want
                                                       ),
                                                     ),
                                                     TextSpan(
                                                       text:
-                                                      '${result?[index].trailerNumber}',
+                                                          '${result?[index].trailerNumber}',
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
-                                                          FontWeight.w500,
+                                                              FontWeight.w500,
                                                           decoration: TextDecoration
                                                               .underline // set the color you want
-                                                      ),
+                                                          ),
                                                     ),
                                                   ],
                                                 ),
                                                 maxLines: 10,
                                                 minFontSize: 17,
                                                 maxFontSize:
-                                                20, // set the replacement text if overflowed
+                                                    20, // set the replacement text if overflowed
                                               ),
                                               minLeadingWidth: 0,
                                               // Text(

@@ -324,7 +324,24 @@ class _SearchPackageScreen extends State<SearchPackageScreen> {
                                               ),
                                               title: AutoSizeText.rich(
                                                 TextSpan(
-                                                  children: [
+                                                  children: [TextSpan(
+                                                    text: 'Container Name: ',
+                                                    style: TextStyle(
+                                                      color:
+                                                      textColor, // set the color you want
+                                                    ),
+                                                  ),
+                                                    TextSpan(
+                                                      text:
+                                                      '${result?[index].containerName} ',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                          decoration: TextDecoration
+                                                              .underline // set the color you want
+                                                      ),
+                                                    ),
                                                     TextSpan(
                                                       text: 'Part Number: ',
                                                       style: TextStyle(

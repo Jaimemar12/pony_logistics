@@ -180,8 +180,8 @@ class _AdminDashboard extends State<AdminDashboard> {
                                   )
                                 ],
                               ),
-                              const SizedBox(
-                                height: appPadding,
+                              SizedBox(
+                                height: Responsive.isMobile(context) ? 0 : appPadding,
                               ),
                               Column(
                                 children: [
@@ -193,81 +193,82 @@ class _AdminDashboard extends State<AdminDashboard> {
                                         flex: 5,
                                         child: Column(
                                           children: [
-                                            Container(
-                                              height: MediaQuery.of(context).size.height - 100,
-                                              width: double.infinity,
-                                              padding: const EdgeInsets.all(appPadding),
-                                              decoration: BoxDecoration(
-                                                color: isDark ? tPrimaryColor : tAccentColor,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        "${DateTime.now().year} TOTAL PACKAGES PER WEEK",
-                                                        style: TextStyle(
-                                                          fontWeight: FontWeight.w700,
-                                                          fontSize: 15,
-                                                          color: textColor,
+                                            if(!Responsive.isMobile(context))
+                                              Container(
+                                                height: MediaQuery.of(context).size.height - 100,
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(appPadding),
+                                                decoration: BoxDecoration(
+                                                  color: isDark ? tPrimaryColor : tAccentColor,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "${DateTime.now().year} TOTAL PACKAGES PER WEEK",
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w700,
+                                                            fontSize: 13,
+                                                            color: columnColor,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Expanded(child: SizedBox()),
+                                                        Expanded(child: SizedBox()),
                                                         IconButton(
                                                             onPressed: () => Get.to(() => ReportsScreen(),
                                                                 transition: Transition.noTransition),
                                                             icon: Icon(
                                                               LineAwesomeIcons.expand,
-                                                              color: textColor,
+                                                              color: columnColor,
                                                             )),
-                                                    ],
-                                                  ),
-                                                  Expanded(
-                                                    child: SfCartesianChart(
-                                                      primaryXAxis: CategoryAxis(
-                                                          labelIntersectAction: AxisLabelIntersectAction.multipleRows,
-                                                          majorGridLines: const MajorGridLines(width: 0),
-                                                          labelStyle: TextStyle(color: columnColor)),
-                                                      primaryYAxis: NumericAxis(
-                                                        labelStyle: TextStyle(color: columnColor),
-                                                        majorGridLines: const MajorGridLines(width: 0),
-                                                      ),
-                                                      zoomPanBehavior: ZoomPanBehavior(
-                                                        enableDoubleTapZooming: true,
-                                                        enablePinching: true,
-                                                        enableMouseWheelZooming: true,
-                                                        enablePanning: true,
-                                                        zoomMode: ZoomMode.xy,
-                                                        maximumZoomLevel: Responsive.isMobile(context) ? .1 : .5,
-                                                      ),
-                                                      series: <ChartSeries>[
-                                                        ColumnSeries<WeekData, String>(
-                                                          dataSource: weekData,
-                                                          xValueMapper: (WeekData week, _) =>
-                                                          '${week.weekLabel}\n${week.weekDate}',
-                                                          yValueMapper: (WeekData week, _) => week.weekValue,
-                                                          pointColorMapper: (WeekData week, _) => columnColor,
-                                                          dataLabelSettings: DataLabelSettings(
-                                                            isVisible: true,
-                                                            labelAlignment: ChartDataLabelAlignment.middle,
-                                                          ),
-                                                        )
                                                       ],
-                                                      tooltipBehavior: TooltipBehavior(
-                                                        textStyle: TextStyle(color: textColor),
-                                                        color: columnColor.withOpacity(.5),
-                                                        enable: true,
-                                                        header: '',
-                                                        format: 'point.x\npoint.y',
-                                                        textAlignment: ChartAlignment.center,
-                                                      ),
                                                     ),
-                                                  )
-                                                ],
+                                                    Expanded(
+                                                      child: SfCartesianChart(
+                                                        primaryXAxis: CategoryAxis(
+                                                            labelIntersectAction: AxisLabelIntersectAction.multipleRows,
+                                                            majorGridLines: const MajorGridLines(width: 0),
+                                                            labelStyle: TextStyle(color: columnColor)),
+                                                        primaryYAxis: NumericAxis(
+                                                          labelStyle: TextStyle(color: columnColor),
+                                                          majorGridLines: const MajorGridLines(width: 0),
+                                                        ),
+                                                        zoomPanBehavior: ZoomPanBehavior(
+                                                          enableDoubleTapZooming: true,
+                                                          enablePinching: true,
+                                                          enableMouseWheelZooming: true,
+                                                          enablePanning: true,
+                                                          zoomMode: ZoomMode.xy,
+                                                          maximumZoomLevel: Responsive.isMobile(context) ? .1 : .5,
+                                                        ),
+                                                        series: <ChartSeries>[
+                                                          ColumnSeries<WeekData, String>(
+                                                            dataSource: weekData,
+                                                            xValueMapper: (WeekData week, _) =>
+                                                            '${week.weekLabel}\n${week.weekDate}',
+                                                            yValueMapper: (WeekData week, _) => week.weekValue,
+                                                            pointColorMapper: (WeekData week, _) => columnColor,
+                                                            dataLabelSettings: DataLabelSettings(
+                                                              isVisible: true,
+                                                              labelAlignment: ChartDataLabelAlignment.middle,
+                                                            ),
+                                                          )
+                                                        ],
+                                                        tooltipBehavior: TooltipBehavior(
+                                                          textStyle: TextStyle(color: textColor),
+                                                          color: columnColor.withOpacity(.5),
+                                                          enable: true,
+                                                          header: '',
+                                                          format: 'point.x\npoint.y',
+                                                          textAlignment: ChartAlignment.center,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
-                                            ),
                                             if (Responsive.isMobile(context))
                                               const SizedBox(
                                                 height: appPadding,

@@ -37,13 +37,7 @@ class GoogleSheetsController extends GetxController {
       await _packageRepo.getAvailablePackagesBetween(startDate, endDate);
 
   Future<void> createPackage(PackageModel package) async {
-    final currentUserEmail = _packageRepo.getUserEmail;
-    if (currentUserEmail != null) {
-      await _packageRepo.createPackage(package);
-    } else {
-      Get.snackbar("Error", "Login to continue",
-          duration: const Duration(seconds: 2));
-    }
+    await _packageRepo.createPackage(package);
   }
 
   // /// Update Package Data

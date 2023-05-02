@@ -106,7 +106,7 @@ class _ReportsScreen extends State<ReportsScreen> {
                                       ),
                                     ),
                                   
-                                  if(Responsive.isDesktop(context))
+                                  if(Responsive.isDesktop(context) || Responsive.isTablet(context))
                                   Form(
                                       key: formKey,
                                       child: Flexible(
@@ -254,7 +254,7 @@ class _ReportsScreen extends State<ReportsScreen> {
                                           ],
                                         ),
                                       )),
-                                  if(!Responsive.isDesktop(context))
+                                  if(!Responsive.isDesktop(context) && !Responsive.isTablet(context))
                                     Expanded(child: SizedBox())
                                     ,
                                   Tooltip(

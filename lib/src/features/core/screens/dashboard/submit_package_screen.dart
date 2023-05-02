@@ -43,8 +43,9 @@ class _SubmitPackageScreen extends State<SubmitPackageScreen> {
       packageController.caseNumber.text = updatePackage!.caseNumber;
       packageController.quantity.text = updatePackage!.quantity;
       packageController.dateReceived.text = updatePackage!.dateReceived;
+      packageController.dateShipped.text = updatePackage!.dateShipped!;
+      packageController.trailerNumber.text = updatePackage!.trailerNumber!;
     }
-    print(action);
     super.initState();
   }
 
@@ -306,7 +307,7 @@ class _SubmitPackageScreen extends State<SubmitPackageScreen> {
                               if (action != 'submit')
                                 TextFormField(
                                   validator: (value) {
-                                    if (value!.isEmpty) {
+                                    if (value!.isEmpty && action != 'edit') {
                                       return "";
                                     } else {
                                       return null;
@@ -351,7 +352,7 @@ class _SubmitPackageScreen extends State<SubmitPackageScreen> {
                               if (action != 'submit')
                                 TextFormField(
                                   validator: (value) {
-                                    if (value!.isEmpty) {
+                                    if (value!.isEmpty && action != 'edit') {
                                       return "";
                                     } else {
                                       return null;
@@ -413,6 +414,10 @@ class _SubmitPackageScreen extends State<SubmitPackageScreen> {
                                         await packageController
                                             .createPackage(package);
                                       } else {
+                                        if(packageController.dateShipped.text.isEmpty){
+                                          print('Empty');
+                                        }
+
                                         await packageController.updateRecord(
                                             updatePackage!,
                                             packageController
@@ -426,14 +431,14 @@ class _SubmitPackageScreen extends State<SubmitPackageScreen> {
                                                 .trailerNumber.text,
                                             action == 'ship'
                                                 ? 'Unavailable'
-                                                : 'Available');
+                                                : updatePackage?.status);
                                       }
                                       setState(() {
                                         packageController.containerName.text =
                                             action != 'submit'
                                                 ? ""
                                                 : packageController
-                                                    .caseNumber.text;
+                                                    .containerName.text;
                                         packageController.partNumber.text = "";
                                         packageController.caseNumber.text = "";
                                         packageController.quantity.text = "";
