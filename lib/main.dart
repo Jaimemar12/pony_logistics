@@ -1,17 +1,19 @@
 import 'dart:math';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pony_logistics/firebase_options.dart';
 import 'package:pony_logistics/src/constants/colors.dart';
 import 'package:pony_logistics/src/features/authentication/screens/welcome/welcome_screen.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
 import 'package:pony_logistics/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
+import 'package:pony_logistics/src/repository/shared_preferences_repository/shared_preferences.dart';
 import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
 import 'package:pony_logistics/src/utils/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_size/window_size.dart';
 import 'dart:io' show Platform;
 
@@ -38,25 +40,26 @@ Future<void> main() async {
     });
   }
 
-  if(Platform.isAndroid) {
-    final Brightness brightness = WidgetsBinding.instance.window.platformBrightness;
+  if (Platform.isAndroid) {
+    final Brightness brightness =
+        WidgetsBinding.instance.window.platformBrightness;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: brightness == Brightness.light ? tPrimaryColor : tAccentColor, // change the color to your desired color
+      systemNavigationBarColor: brightness == Brightness.light
+          ? tPrimaryColor
+          : tAccentColor, // change the color to your desired color
     ));
   }
 
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  if (!Platform.isMacOS) {
-    await Firebase.initializeApp(
-            name: 'pony-logistics',
-            options: DefaultFirebaseOptions.currentPlatform)
-        .then((value) => Get.put(AuthenticationRepository()));
-  }
-
+  // if (!Platform.isWindows) {
+  //   await Firebase.initializeApp(
+  //           name: 'pony-logistics',
+  //           options: DefaultFirebaseOptions.currentPlatform)
+  //       .then((value) => Get.put(AuthenticationRepository()));
+  // }
   await GoogleSheetsRepository.init();
-  await UserRepository.init();
-
+  await SharedPreferencesRepository.init();
   runApp(const App());
 }
 
@@ -72,7 +75,16 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
-      home: const WelcomeScreen(),
+      home: isUserLoggedIn(),
     );
+  }
+
+  isUserLoggedIn() {
+    SharedPreferencesRepository.getUserName().then((value) {
+      if (value != null) {
+        Get.to(() => AdminDashboard(), transition: Transition.noTransition);
+      }
+    });
+    return WelcomeScreen();
   }
 }

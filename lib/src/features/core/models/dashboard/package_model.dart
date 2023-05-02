@@ -9,7 +9,6 @@ class PackageModel {
   final String quantity;
   final String dateReceived;
   final String? dateShipped;
-  final String? dateDelivered;
   final String? trailerNumber;
   final String? status;
 
@@ -22,7 +21,6 @@ class PackageModel {
       required this.quantity,
       required this.dateReceived,
       this.dateShipped,
-      this.dateDelivered,
       this.trailerNumber,
       this.status});
 
@@ -35,7 +33,6 @@ class PackageModel {
       "Quantity": quantity,
       "DateReceived": dateReceived,
       "DateShipped": dateShipped,
-      "DateDelivered": dateDelivered,
       "TrailerNumber": trailerNumber,
       "Status": status,
     };
@@ -53,7 +50,6 @@ class PackageModel {
         quantity: data["Quantity"],
         dateReceived: data["DateReceived"],
         dateShipped: data["DateShipped"],
-        dateDelivered: data["DateDelivered"],
         trailerNumber: data["TrailerNumber"],
         status: data["Status"]);
   }
@@ -65,7 +61,6 @@ class PackageModel {
         .toString());
     var dateReceived = "${date.month}/${date.day}/${date.year}";
     String dateShipped;
-    String dateDelivered;
 
     if (snapshot["DateShipped"] != 'null') {
       date = DateTime.parse(epoch
@@ -76,15 +71,6 @@ class PackageModel {
       dateShipped = '';
     }
 
-    if (snapshot["DateDelivered"] != 'null') {
-      date = DateTime.parse(epoch
-          .add(Duration(days: int.parse(snapshot["DateDelivered"])))
-          .toString());
-      dateDelivered = "${date.month}/${date.day}/${date.year}";
-    } else {
-      dateDelivered = '';
-    }
-
     return PackageModel(
         id: snapshot["Id"],
         containerName: snapshot["ContainerName"],
@@ -93,8 +79,9 @@ class PackageModel {
         quantity: snapshot["Quantity"],
         dateReceived: dateReceived,
         dateShipped: dateShipped,
-        dateDelivered: dateDelivered,
-        trailerNumber: snapshot["TrailerNumber"] ?? '',
+        trailerNumber: snapshot["TrailerNumber"] != 'null'
+            ? snapshot["TrailerNumber"]
+            : '',
         status: snapshot["Status"] ?? '');
   }
 
@@ -107,7 +94,6 @@ class PackageModel {
       "Quantity": quantity,
       "DateReceived": dateReceived,
       "DateShipped": dateShipped,
-      "DateDelivered": dateDelivered,
       "TrailerNumber": trailerNumber,
       "Status": status,
     };

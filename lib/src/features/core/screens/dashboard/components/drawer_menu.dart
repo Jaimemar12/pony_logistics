@@ -4,11 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/reports_screen.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_screen.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/sizes.dart';
 import '../../packages/search_package_screen.dart';
+import '../ship_package_screen.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({Key? key}) : super(key: key);
@@ -55,7 +57,21 @@ class DrawerMenu extends StatelessWidget {
                 color: textColor,
               ),
               onTap: () {
-                Get.to(() => SubmitPackageScreen(null),
+                Get.to(() => SubmitPackageScreen(null, 'submit'),
+                    transition: Transition.noTransition);
+              },
+            ),
+            ListTile(
+              hoverColor: Colors.black,
+              textColor: textColor,
+              minLeadingWidth: 0,
+              title: const Text('Ship Package'),
+              leading: Icon(
+                LineAwesomeIcons.boxes,
+                color: textColor,
+              ),
+              onTap: () {
+                Get.to(() => ShipPackageScreen(),
                     transition: Transition.noTransition);
               },
             ),
@@ -77,12 +93,14 @@ class DrawerMenu extends StatelessWidget {
               hoverColor: Colors.black,
               textColor: textColor,
               minLeadingWidth: 0,
-              title: const Text('Statistics'),
+              title: const Text('Reports'),
               leading: Icon(
                 LineAwesomeIcons.bar_chart,
                 color: textColor,
               ),
-              onTap: () {},
+              onTap: () {
+                Get.to( () => const ReportsScreen(), transition: Transition.noTransition);
+              },
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: appPadding * 2),

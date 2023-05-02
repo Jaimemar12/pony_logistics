@@ -9,26 +9,33 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pony_logistics/src/constants/sizes.dart';
+import 'package:pony_logistics/src/features/core/controllers/google_sheets_controller.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/admin_dashboard.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/result_screen.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/ship_package_screen.dart';
 import 'package:pony_logistics/src/features/core/screens/dashboard/submit_package_screen.dart';
 
 import '../../../../constants/colors.dart';
+import '../../../../repository/google_sheets_repository/google_sheets_repository.dart';
+import 'components/drawer_menu.dart';
+import 'components/responsive.dart';
 
 class ScanPictureScreen extends StatefulWidget {
-  const ScanPictureScreen({Key? key}) : super(key: key);
+  ScanPictureScreen(this.screen, {Key? key}) : super(key: key);
+  String screen;
 
   @override
   State<StatefulWidget> createState() {
-    return _ScanPictureScreen();
+    return _ScanPictureScreen(screen);
   }
 }
 
 class _ScanPictureScreen extends State<ScanPictureScreen>
     with WidgetsBindingObserver {
-  _ScanPictureScreen() : super();
+  _ScanPictureScreen(this.screen) : super();
 
+  String screen;
   bool _isPermissionGranted = false;
   late final Future<void> getPermission;
   CameraController? _cameraController;
@@ -155,22 +162,29 @@ class _ScanPictureScreen extends State<ScanPictureScreen>
       String quantity = textList[textList.length - 1].numericOnly();
 
       for (var element in textList) {
-        if(element.numericOnly().isNumericOnly){
+        if (element.numericOnly().isNumericOnly) {
           partNumber = element.numericOnly();
           break;
         }
       }
 
-      PackageModel package = PackageModel(
-          containerName: '',
-          partNumber: partNumber,
-          caseNumber: caseNumber,
-          quantity: quantity,
-          dateReceived:
-              DateFormat('MM/dd/yyyy').format(DateTime.now()).toString());
-
       imageCache.clear();
-      Get.to( () => SubmitPackageScreen(package), transition: Transition.noTransition);
+      if (screen == 'submit') {
+        PackageModel package = PackageModel(
+            containerName: '',
+            partNumber: partNumber,
+            caseNumber: caseNumber,
+            quantity: quantity,
+            dateReceived:
+                DateFormat('MM/dd/yyyy').format(DateTime.now()).toString());
+        Get.to(() => SubmitPackageScreen(package, 'submit'),
+            transition: Transition.noTransition);
+      } else {
+        List<PackageModel> package =
+            await GoogleSheetsRepository().getPackages(partNumber, caseNumber);
+        Get.to(() => SubmitPackageScreen(package[0], 'ship'),
+            transition: Transition.noTransition);
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -182,70 +196,97 @@ class _ScanPictureScreen extends State<ScanPictureScreen>
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getPermission,
-      builder: (context, snapshot) {
-        return Stack(
+    return Scaffold(
+      backgroundColor:
+          MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? tAccentColor
+              : tPrimaryColor,
+      drawer: const DrawerMenu(),
+      body: SafeArea(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (_isPermissionGranted)
-              FutureBuilder<List<CameraDescription>>(
-                future: availableCameras(),
+            if (Responsive.isDesktop(context))
+              const Expanded(
+                child: DrawerMenu(),
+              ),
+            Expanded(
+              flex: 5,
+              child: FutureBuilder(
+                future: getPermission,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    _initCameraController(snapshot.data!);
+                  return Stack(
+                    children: [
+                      if (_isPermissionGranted)
+                        FutureBuilder<List<CameraDescription>>(
+                          future: availableCameras(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              _initCameraController(snapshot.data!);
 
-                    return Center(
-                      child: CameraPreview(_cameraController!),
-                    );
-                  } else {
-                    return const LinearProgressIndicator();
-                  }
+                              return Center(
+                                child: CameraPreview(_cameraController!),
+                              );
+                            } else {
+                              return const LinearProgressIndicator();
+                            }
+                          },
+                        ),
+                      Scaffold(
+                        backgroundColor: _isPermissionGranted
+                            ? Colors.transparent
+                            : (MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark
+                                ? tAccentColor
+                                : tPrimaryColor),
+                        body: (_isPermissionGranted && (Platform.isAndroid || Platform.isIOS))
+                            ? Column(
+                                children: [
+                                  Expanded(child: Container()),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: appPadding, right: appPadding),
+                                    child: Center(
+                                      child: ElevatedButton(
+                                        onPressed: _scanImage,
+                                        child: const Icon(Icons.camera),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Center(
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      left: appPadding, right: appPadding),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Camera Permission Denied',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.to(() => AdminDashboard(),
+                                              transition:
+                                                  Transition.noTransition);
+                                        },
+                                        child: Text('Return home'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                      )
+                    ],
+                  );
                 },
               ),
-            Scaffold(
-              backgroundColor: _isPermissionGranted ? Colors.transparent : null,
-              body: _isPermissionGranted
-                  ? Column(
-                      children: [
-                        Expanded(child: Container()),
-                        Container(
-                          padding: EdgeInsets.only(
-                              left: appPadding, right: appPadding),
-                          child: Center(
-                            child: ElevatedButton(
-                              onPressed: _scanImage,
-                              child: const Icon(Icons.camera),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  : Center(
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            left: appPadding, right: appPadding),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Camera Permission Denied',
-                              textAlign: TextAlign.center,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Get.to(() => AdminDashboard(),
-                                    transition: Transition.noTransition);
-                              },
-                              child: Text('Return home'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
             )
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

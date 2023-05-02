@@ -79,8 +79,12 @@ const String tDashboardSearch = "Search Part Number";
 const String tPartNumber = "Part Number";
 const String tCaseNumber = "Case Number";
 const String tQuantity = "Quantity";
-const String tDateDelivered = "Date Received";
+const String tDateReceived = "Date Received";
+const String tDateShipped = "Date Shipped";
+const String tTrailerNumber = "Trailer Number";
+const String tCarrierName = "Carrier Name";
 const String tSubmit = "Submit";
+const String tPackingSlipNumber = "Packing Slip Number";
 
 // -- Profile Screen - Text
 const String tProfile = "Profile";

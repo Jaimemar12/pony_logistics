@@ -29,7 +29,7 @@ class TodayPackages extends StatelessWidget {
           .toString();
       var todayDate =
           DateFormat('MM/dd/yyyy').format(DateTime.now()).toString();
-      if (date == todayDate) {
+      if (date == todayDate && packages[i].status == 'Available') {
         filteredPackages.add(packages[i]);
       }
     }
@@ -44,7 +44,7 @@ class TodayPackages extends StatelessWidget {
     final scrollController = ScrollController();
 
     return Container(
-      height: 540,
+      height: MediaQuery.of(context).size.height - 100,
       padding: const EdgeInsets.all(appPadding),
       decoration: BoxDecoration(
         color: isDark ? tPrimaryColor : tAccentColor,
@@ -122,7 +122,7 @@ class TodayPackages extends StatelessWidget {
                                             : tAccentColor,
                                       ),
                                       child: Icon(LineAwesomeIcons.box,
-                                          color: iconColor)),
+                                          color: todayPackages[index].status == 'Available' ? Colors.green : Colors.red)),
                                   trailing: Container(
                                     padding: const EdgeInsets.all(1.0),
                                     child: Container(
@@ -131,16 +131,18 @@ class TodayPackages extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(100),
-                                        color: iconColor.withOpacity(0.1),
+                                        color: isDark ? tPrimaryColor : tAccentColor,
                                       ),
                                       child: IconButton(
                                         onPressed: () => Get.to(
                                           () => SubmitPackageScreen(
-                                              todayPackages[index]),
+                                              todayPackages[index], 'edit'),
                                           transition: Transition.noTransition,
                                         ),
-                                        icon: const Icon(LineAwesomeIcons.edit),
-                                        color: iconColor.withOpacity(0.1),
+                                        icon: Icon(LineAwesomeIcons.edit, color: iconColor),
+                                        color: isDark
+                                            ? tPrimaryColor
+                                            : tAccentColor,
                                       ),
                                     ),
                                   ),
@@ -286,7 +288,7 @@ class TodayPackages extends StatelessWidget {
                                   color: isDark ? tPrimaryColor : tAccentColor,
                                 ),
                                 child: Icon(LineAwesomeIcons.box,
-                                    color: iconColor)),
+                                    color: todayPackages[index].status == 'Available' ? Colors.green : Colors.red)),
                             trailing: Container(
                               padding: const EdgeInsets.all(1.0),
                               child: Container(
@@ -294,16 +296,18 @@ class TodayPackages extends StatelessWidget {
                                 height: 40,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
-                                  color: iconColor.withOpacity(0.1),
+                                  color: isDark ? tPrimaryColor : tAccentColor,
                                 ),
                                 child: IconButton(
                                   onPressed: () => Get.to(
                                     () => SubmitPackageScreen(
-                                        todayPackages[index]),
+                                        todayPackages[index], 'edit'),
                                     transition: Transition.noTransition,
                                   ),
-                                  icon: const Icon(LineAwesomeIcons.edit),
-                                  color: iconColor,
+                                  icon: Icon(LineAwesomeIcons.edit, color: iconColor,),
+                                  color: isDark
+                                      ? tPrimaryColor
+                                      : tAccentColor,
                                 ),
                               ),
                             ),

@@ -1,23 +1,13 @@
-import 'dart:io';
 import 'dart:math';
 
-import 'package:firedart/auth/firebase_auth.dart' as Firedart;
-import 'package:firedart/firedart.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:gsheets/gsheets.dart';
+import 'package:pony_logistics/src/features/authentication/models/user_model.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
-import 'package:pony_logistics/src/repository/user_repository/user_repository.dart';
+import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
 
-import '../../features/authentication/models/user_model.dart';
-import '../../features/authentication/screens/welcome/welcome_screen.dart';
-import '../../features/core/screens/dashboard/admin_dashboard.dart';
-import '../shared_preferences_repository/shared_preferences.dart';
-import 'exceptions/login_with_email_and_pssword_failure.dart';
-import 'exceptions/signup_email_password_failure.dart';
-
-class GoogleSheetsRepository extends GetxController {
-  static GoogleSheetsRepository get instance => Get.find();
+class ReportRepository extends GetxController {
+  static ReportRepository get instance => Get.find();
 
   static getCredentials() {
     const androidJson = r'''
@@ -109,24 +99,6 @@ class GoogleSheetsRepository extends GetxController {
   }
 
   static const _spreadsheetId = '1_N2BegFqfMcCgZK0jRLfmZxBZXK2f4H-_X29oMmsyhM';
-  static final _auth = Firedart.FirebaseAuth.instance;
-  static var _firebaseUser;
-
-  String? get getUserID => _auth.userId;
-  String? get getUserEmail => _firebaseUser.email;
-
-  static getUser() {
-    if(_firebaseUser == null) {
-      return null;
-    }
-    return _firebaseUser;
-  }
-
-  static Future init() async {
-    FirebaseAuth.initialize(
-        'AIzaSyAg9KXa-uLM-1fe8glR-lAAvq44cq3spPc', VolatileStore());
-    Firestore.initialize('pony-logistics');
-  }
 
   static Future<Worksheet> _getWorksheet(Spreadsheet spreadsheet,
       {required String title}) async {
@@ -137,258 +109,79 @@ class GoogleSheetsRepository extends GetxController {
     }
   }
 
-  Future<void> createPackage(PackageModel package) async {
+  Future<void> generateReport(String packingSlip, String trailerNumber, String carrierName) async {
+    List<PackageModel> shippedPackages =
+        await GoogleSheetsRepository().getTodayShippedPackages();
     final spreadsheet =
         await GSheets(getCredentials()).spreadsheet(_spreadsheetId);
-    final Worksheet packageSheet =
-        await _getWorksheet(spreadsheet, title: 'Packages');
-    var json = package.toJsonG();
-    while (await packageSheet.values.map.rowByKey(json["Id"]) != null) {
-      json = package.toJsonG();
-    }
-    await packageSheet.values.map.appendRow(json);
-  }
+    final Worksheet reportSheet =
+        await _getWorksheet(spreadsheet, title: 'Report');
+    reportSheet.clear();
+    Map<String, List<PackageModel>> groupedShippedPackages = {};
 
-  Future<List<PackageModel>> getAllPackages() async {
-    final spreadsheet =
-        await GSheets(getCredentials()).spreadsheet(_spreadsheetId);
-    final Worksheet packageSheet =
-        await _getWorksheet(spreadsheet, title: 'Packages');
-
-    final snapshot = await packageSheet.values.map.allRows();
-    return snapshot == null
-        ? <PackageModel>[]
-        : snapshot.map((e) => PackageModel.fromGoogleSnapshot(e)).toList();
-  }
-
-  /// Update Package details
-  Future<void> updatePackageRecord(
-      PackageModel package,
-      String containerName,
-      String partNumber,
-      String caseNumber,
-      String quantity,
-      String dateReceived,
-      [String? dateShipped,
-      String? trailerNumber,
-      String? status]) async {
-    final spreadsheet =
-        await GSheets(getCredentials()).spreadsheet(_spreadsheetId);
-    final Worksheet packageSheet =
-        await _getWorksheet(spreadsheet, title: 'Packages');
-
-    final cellsOfRow = await packageSheet.cells.rowByKey(package.id.toString());
-    if (cellsOfRow == null) {
-      createPackage(package);
+    if(shippedPackages.isEmpty) {
       return;
     }
-    int index = 0;
-    for (var cell in cellsOfRow) {
-      switch (index) {
-        case 0:
-          cell.value = containerName;
-          break;
-        case 1:
-          cell.value = partNumber;
-          break;
-        case 2:
-          cell.value = caseNumber;
-          break;
-        case 3:
-          cell.value = quantity;
-          break;
-        case 4:
-          cell.value = dateReceived;
-          break;
-        case 5:
-          cell.value = dateShipped ?? 'null';
-          break;
-        case 6:
-          cell.value = trailerNumber ?? 'null';
-          break;
-        case 7:
-          cell.value = status ?? 'Available';
-          break;
+
+    for (PackageModel shippedPackage in shippedPackages) {
+      String partNumber = shippedPackage.partNumber;
+      if (!groupedShippedPackages.containsKey(partNumber)) {
+        groupedShippedPackages[partNumber] = [shippedPackage];
+      } else {
+        groupedShippedPackages[partNumber]?.add(shippedPackage);
       }
-      index++;
     }
-    await packageSheet.cells.insert(cellsOfRow);
-  }
 
-  /// Delete Package Data
-  Future<bool> deletePackage(String id) async {
-    final spreadsheet =
-        await GSheets(getCredentials()).spreadsheet(_spreadsheetId);
-    final Worksheet packageSheet =
-        await _getWorksheet(spreadsheet, title: 'Packages');
+    List<List<String>> multiValues = [
+      ["Date Shipped", shippedPackages[0].dateShipped!, "Carrier Name", carrierName],
+      ["", "", "Driver Name"],
+      ["Part Number", "CNO", "QTY", "Skids", "Total"]
+    ];
+    int ultimateCount = 0;
+    int packageCount = 0;
 
-    final index = await packageSheet.values.rowIndexOf(id);
-    return index == -1
-        ? Future<bool>.value(false)
-        : packageSheet.deleteRow(index);
-  }
+    for (String partNumber in groupedShippedPackages.keys) {
+      int totalCount = 0;
+      List<PackageModel>? shippedPackage = groupedShippedPackages[partNumber];
+      if (shippedPackage != null) {
+        for (int i = 0; i < shippedPackage.length; i++) {
+          packageCount += 1;
+          List<String> values = [];
 
-  Future<List<PackageModel>> getPackages(String partNumber,
-      [String? caseNumber]) async {
-    var packages = await getAllPackages();
-    var filteredPackages = <PackageModel>[];
+          if (i == 0) {
+            values.add(shippedPackage[i].partNumber);
+          } else {
+            values.add('');
+          }
 
-    if (caseNumber == null) {
-      for (int i = 0; i < packages.length; i++) {
-        if (partNumber == packages[i].partNumber) {
-          filteredPackages.add(packages[i]);
+          values.add(shippedPackage[i].caseNumber);
+          values.add(shippedPackage[i].quantity);
+          values.add('1');
+
+          totalCount += int.parse(shippedPackage[i].quantity);
+
+          if (i == shippedPackage.length - 1) {
+            values.add(totalCount.toString());
+          }
+
+          multiValues.add(values);
         }
-      }
-    } else {
-      for (int i = 0; i < packages.length; i++) {
-        if (partNumber == packages[i].partNumber &&
-            caseNumber == packages[i].caseNumber) {
-          filteredPackages.add(packages[i]);
-        }
-      }
-    }
-    return filteredPackages;
-  }
-
-  Future<List<PackageModel>> getAvailablePackages(String partNumber) async {
-    var packages = await getAllPackages();
-    var filteredPackages = <PackageModel>[];
-
-    for (int i = 0; i < packages.length; i++) {
-      if (partNumber == packages[i].partNumber && packages[i].status == 'Available') {
-        filteredPackages.add(packages[i]);
+        ultimateCount += totalCount;
       }
     }
 
-    return filteredPackages;
-  }
+    reportSheet.values.insertRows(
+        1,
+        [
+          ["Packing Slip #", packingSlip],
+          ["", ""],
+          ["TRLR#", trailerNumber]
+        ],
+        fromColumn: 5);
+    
+    multiValues.add(['', '', ultimateCount.toString(), packageCount.toString()]);
+    multiValues.add(['Consignee Signature']);
 
-  Future<List<PackageModel>> getPackagesBetween(
-      String startDate, String endDate) async {
-    var packages = await getAllPackages();
-    var dateFormat = DateFormat('MM/dd/yyyy');
-    var filteredPackages = <PackageModel>[];
-
-    for (int i = 0; i < packages.length; i++) {
-      var date = dateFormat.parse(packages[i].dateReceived);
-      if (date.compareTo(
-                  DateTime.parse(dateFormat.parse(startDate).toString())) >=
-              0 &&
-          date.compareTo(
-                  DateTime.parse(dateFormat.parse(endDate).toString())) <=
-              0) {
-        filteredPackages.add(packages[i]);
-      }
-    }
-    return filteredPackages;
-  }
-
-  Future<List<PackageModel>> getAvailablePackagesBetween(
-      String startDate, String endDate) async {
-    var packages = await getAllPackages();
-    var dateFormat = DateFormat('MM/dd/yyyy');
-    var filteredPackages = <PackageModel>[];
-
-    for (int i = 0; i < packages.length; i++) {
-      var date = dateFormat.parse(packages[i].dateReceived);
-      if ((date.compareTo(
-          DateTime.parse(dateFormat.parse(startDate).toString())) >=
-          0 &&
-          date.compareTo(
-              DateTime.parse(dateFormat.parse(endDate).toString())) <=
-              0) && packages[i].status == 'Available') {
-        filteredPackages.add(packages[i]);
-      }
-    }
-    return filteredPackages;
-  }
-
-  Future<List<PackageModel>> getTodayPackages() async {
-    var packages = await getAllPackages();
-    var dateFormat = DateFormat('MM/dd/yyyy');
-    var filteredPackages = <PackageModel>[];
-
-    for (int i = 0; i < packages.length; i++) {
-      var date = DateFormat('MM/dd/yyyy')
-          .format(dateFormat.parse(packages[i].dateReceived))
-          .toString();
-      var todayDate =
-          DateFormat('MM/dd/yyyy').format(DateTime.now()).toString();
-      if (date == todayDate) {
-        filteredPackages.add(packages[i]);
-      }
-    }
-    return filteredPackages;
-  }
-
-  Future<List<PackageModel>> getTodayShippedPackages() async {
-    var packages = await getAllPackages();
-    var dateFormat = DateFormat('MM/dd/yyyy');
-    var filteredPackages = <PackageModel>[];
-
-    for (int i = 0; i < packages.length; i++) {
-      if(packages[i].dateShipped != '') {
-        var date = DateFormat('MM/dd/yyyy')
-            .format(dateFormat.parse(packages[i].dateShipped!))
-            .toString();
-        var todayDate =
-        DateFormat('MM/dd/yyyy').format(DateTime.now()).toString();
-        if (date == todayDate) {
-          filteredPackages.add(packages[i]);
-        }
-      }
-    }
-    return filteredPackages;
-  }
-
-  /// Email Authentication Windows - LOGIN
-  static Future<String?> loginWithEmailAndPasswordWindows(
-      String email, String password) async {
-    try {
-      print(email);
-      print(password);
-      await _auth.signIn(email, password);
-      _firebaseUser = await _auth.getUser();
-      UserModel? user = await UserRepository().getUserDetails(email);
-      if(user != null) {
-        SharedPreferencesRepository.setUserName(user.fullName);
-        SharedPreferencesRepository.setUserPassword(user.password);
-        SharedPreferencesRepository.setUserEmail(user.email);
-        SharedPreferencesRepository.setUserPhone(user.phoneNo);
-      }
-    } on Exception catch (e) {
-      final ex = LogInWithEmailAndPasswordFailure.fromCode(e.toString());
-      print(e.toString());
-      return ex.message;
-    } catch (_) {
-      const ex = LogInWithEmailAndPasswordFailure();
-      print(ex.message);
-      return ex.message;
-    }
-    return 'Success';
-  }
-
-  Future<String?> createUserWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      await _auth.signUp(email, password);
-      _firebaseUser = await _auth.getUser();
-      _firebaseUser != null
-          ? Get.to(
-              () => const AdminDashboard(),
-              transition: Transition.noTransition,
-            )
-          : Get.to(
-              () => const WelcomeScreen(),
-              transition: Transition.noTransition,
-            );
-    } on Exception catch (e) {
-      final ex = SignUpWithEmailAndPasswordFailure.code(e.toString());
-      return ex.message;
-    } catch (_) {
-      const ex = SignUpWithEmailAndPasswordFailure();
-      return ex.message;
-    }
-    return null;
+    reportSheet.values.insertRows(14, multiValues, fromColumn: 2);
   }
 }

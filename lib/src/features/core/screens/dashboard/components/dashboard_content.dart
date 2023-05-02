@@ -9,7 +9,7 @@
 // import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
 // import 'package:pony_logistics/src/features/core/screens/dashboard/components/responsive.dart';
 // import 'package:pony_logistics/src/features/core/screens/dashboard/components/top_referrals.dart';
-// import 'package:pony_logistics/src/features/core/screens/dashboard/components/users.dart';
+// import 'package:pony_logistics/src/features/core/screens/dashboard/components/statistics.dart';
 // import 'package:pony_logistics/src/features/core/screens/dashboard/components/users_by_device.dart';
 // import 'package:pony_logistics/src/features/core/screens/dashboard/components/viewers.dart';
 // import 'package:pony_logistics/src/features/core/screens/menu/menu_screen.dart';

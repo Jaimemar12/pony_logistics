@@ -15,18 +15,26 @@ class GoogleSheetsController extends GetxController {
   final quantity = TextEditingController();
   final dateReceived = TextEditingController();
   final dateShipped = TextEditingController();
-  final dateDelivered = TextEditingController();
-  final truckNumber = TextEditingController();
+  final trailerNumber = TextEditingController();
 
   Future<List<PackageModel>> getAllPackages() async =>
       await _packageRepo.getAllPackages();
 
-  Future<List<PackageModel>> getPackages(String partNumber) async =>
-      await _packageRepo.getPackages(partNumber);
+  Future<List<PackageModel>> getPackages(String partNumber,
+      [String? caseNumber]) async {
+    return await _packageRepo.getPackages(partNumber, caseNumber);
+  }
+
+  Future<List<PackageModel>> getAvailablePackages(String partNumber) async {
+    return await _packageRepo.getAvailablePackages(partNumber);
+  }
 
   Future<List<PackageModel>> getPackagesBetween(
           String startDate, String endDate) async =>
       await _packageRepo.getPackagesBetween(startDate, endDate);
+
+  Future<List<PackageModel>> getAvailablePackagesBetween(String startDate, String endDate) async =>
+      await _packageRepo.getAvailablePackagesBetween(startDate, endDate);
 
   Future<void> createPackage(PackageModel package) async {
     final currentUserEmail = _packageRepo.getUserEmail;
@@ -45,9 +53,12 @@ class GoogleSheetsController extends GetxController {
       String partNumber,
       String caseNumber,
       String quantity,
-      String dateReceived) async {
+      String dateReceived,
+      [String? dateShipped,
+      String? trailerNumber,
+      String? status]) async {
     await _packageRepo.updatePackageRecord(
-        package, containerName, partNumber, caseNumber, quantity, dateReceived);
+        package, containerName, partNumber, caseNumber, quantity, dateReceived, dateShipped, trailerNumber, status);
   }
 
   Future<List<PackageModel>> getTodayPackages() async =>

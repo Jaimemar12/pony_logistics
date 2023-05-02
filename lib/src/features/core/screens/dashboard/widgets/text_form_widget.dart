@@ -97,7 +97,7 @@ class _TextFormWidget extends State<TextFormWidget> {
               controller: controller.dateReceived,
               readOnly: true,
               decoration: InputDecoration(
-                  label: const Text(tDateDelivered),
+                  label: const Text(tDateReceived),
                   prefixIcon: const Icon(Icons.calendar_today),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),

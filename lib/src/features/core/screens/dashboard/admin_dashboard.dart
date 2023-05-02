@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/reports_screen.dart';
 import 'package:pony_logistics/src/features/core/screens/packages/search_package_screen.dart';
 import 'package:pony_logistics/src/repository/google_sheets_repository/google_sheets_repository.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
@@ -15,7 +19,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pony_logistics/src/features/core/controllers/profile_controller.dart';
 import 'package:pony_logistics/src/features/core/models/dashboard/package_model.dart';
-import 'package:pony_logistics/src/features/core/screens/dashboard/components/users.dart';
+import 'package:pony_logistics/src/features/core/screens/dashboard/components/statistics.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -29,21 +33,33 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboard extends State<AdminDashboard> {
   _AdminDashboard() : super();
 
-  late Future<List<dynamic>> data;
+  late Future<List<PackageModel>> data;
+  final weekData = _createRandomData(DateTime.now().year);
 
-  Future<List<dynamic>> getList() async {
-    final userController = UserController();
-    List<PackageModel> packages = await packageController.getAllPackages();
-    String? userName = await userController.getUserName();
-    var temp = [];
-    temp.add(packages);
-    temp.add(userName);
-    return Future.value(temp);
+  Future<List<PackageModel>> getPackages() async {
+    return await packageController.getTodayPackages();
+  }
+
+  static List<WeekData> _createRandomData(int year) {
+    print('Refreshed Graph');
+    final random = Random();
+    final firstDayOfYear = DateTime(year, 1, 1);
+    final firstMondayOfYear = firstDayOfYear.weekday == 1
+        ? firstDayOfYear
+        : firstDayOfYear.add(Duration(days: 8 - firstDayOfYear.weekday));
+    final weekData = List<WeekData>.generate(54, (index) {
+      final weekStartDate = firstMondayOfYear.add(Duration(days: index * 7));
+      final weekLabel = 'W${index + 1}';
+      final dateLabel = '${weekStartDate.day}/${weekStartDate.month}';
+      final weekValue = random.nextInt(100);
+      return WeekData(weekLabel, dateLabel, weekValue);
+    });
+    return weekData;
   }
 
   @override
   void initState() {
-    data = Future.value(getList());
+    data = getPackages();
     super.initState();
   }
 
@@ -53,6 +69,7 @@ class _AdminDashboard extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var textColor = isDark ? tPrimaryColor : tAccentColor;
+    var columnColor = !isDark ? tPrimaryColor : tAccentColor;
     Get.put(GoogleSheetsRepository());
 
     return Scaffold(
@@ -71,13 +88,12 @@ class _AdminDashboard extends State<AdminDashboard> {
               ),
             Expanded(
               flex: 5,
-              child: FutureBuilder<List<dynamic>>(
+              child: FutureBuilder<List<PackageModel>>(
                 future: data,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
-                      List<PackageModel> packages = snapshot.data![0];
-                      String userName = snapshot.data![1];
+                      List<PackageModel> packages = snapshot.data!;
 
                       return SafeArea(
                         child: SingleChildScrollView(
@@ -135,7 +151,7 @@ class _AdminDashboard extends State<AdminDashboard> {
                                       hoverColor: Colors.transparent,
                                       onPressed: () {
                                         setState(() {
-                                          data = Future.value(getList());
+                                          data = getPackages();
                                         });
                                       },
                                       icon: Icon(
@@ -159,18 +175,6 @@ class _AdminDashboard extends State<AdminDashboard> {
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                        if (!Responsive.isMobile(context))
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: appPadding / 2),
-                                            child: Text(
-                                              'Hi, ${userName}',
-                                              style: TextStyle(
-                                                color: textColor,
-                                                fontWeight: FontWeight.w800,
-                                              ),
-                                            ),
-                                          )
                                       ],
                                     ),
                                   )
@@ -189,7 +193,81 @@ class _AdminDashboard extends State<AdminDashboard> {
                                         flex: 5,
                                         child: Column(
                                           children: [
-                                            const Users(0.0),
+                                            Container(
+                                              height: MediaQuery.of(context).size.height - 100,
+                                              width: double.infinity,
+                                              padding: const EdgeInsets.all(appPadding),
+                                              decoration: BoxDecoration(
+                                                color: isDark ? tPrimaryColor : tAccentColor,
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        "${DateTime.now().year} TOTAL PACKAGES PER WEEK",
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.w700,
+                                                          fontSize: 15,
+                                                          color: textColor,
+                                                        ),
+                                                      ),
+                                                      Expanded(child: SizedBox()),
+                                                        IconButton(
+                                                            onPressed: () => Get.to(() => ReportsScreen(),
+                                                                transition: Transition.noTransition),
+                                                            icon: Icon(
+                                                              LineAwesomeIcons.expand,
+                                                              color: textColor,
+                                                            )),
+                                                    ],
+                                                  ),
+                                                  Expanded(
+                                                    child: SfCartesianChart(
+                                                      primaryXAxis: CategoryAxis(
+                                                          labelIntersectAction: AxisLabelIntersectAction.multipleRows,
+                                                          majorGridLines: const MajorGridLines(width: 0),
+                                                          labelStyle: TextStyle(color: columnColor)),
+                                                      primaryYAxis: NumericAxis(
+                                                        labelStyle: TextStyle(color: columnColor),
+                                                        majorGridLines: const MajorGridLines(width: 0),
+                                                      ),
+                                                      zoomPanBehavior: ZoomPanBehavior(
+                                                        enableDoubleTapZooming: true,
+                                                        enablePinching: true,
+                                                        enableMouseWheelZooming: true,
+                                                        enablePanning: true,
+                                                        zoomMode: ZoomMode.xy,
+                                                        maximumZoomLevel: Responsive.isMobile(context) ? .1 : .5,
+                                                      ),
+                                                      series: <ChartSeries>[
+                                                        ColumnSeries<WeekData, String>(
+                                                          dataSource: weekData,
+                                                          xValueMapper: (WeekData week, _) =>
+                                                          '${week.weekLabel}\n${week.weekDate}',
+                                                          yValueMapper: (WeekData week, _) => week.weekValue,
+                                                          pointColorMapper: (WeekData week, _) => columnColor,
+                                                          dataLabelSettings: DataLabelSettings(
+                                                            isVisible: true,
+                                                            labelAlignment: ChartDataLabelAlignment.middle,
+                                                          ),
+                                                        )
+                                                      ],
+                                                      tooltipBehavior: TooltipBehavior(
+                                                        textStyle: TextStyle(color: textColor),
+                                                        color: columnColor.withOpacity(.5),
+                                                        enable: true,
+                                                        header: '',
+                                                        format: 'point.x\npoint.y',
+                                                        textAlignment: ChartAlignment.center,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
                                             if (Responsive.isMobile(context))
                                               const SizedBox(
                                                 height: appPadding,
@@ -210,10 +288,6 @@ class _AdminDashboard extends State<AdminDashboard> {
                                         ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: appPadding,
-                                  ),
-                                  const Users(0.0),
                                 ],
                               ),
                             ],
@@ -221,9 +295,51 @@ class _AdminDashboard extends State<AdminDashboard> {
                         ),
                       );
                     } else if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error.toString()));
+                      return Center(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              left: appPadding, right: appPadding),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Unable to Retrieve Data',
+                                textAlign: TextAlign.center,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Get.to(() => AdminDashboard(),
+                                      transition: Transition.noTransition);
+                                },
+                                child: Text('Return home'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     } else {
-                      return const Center(child: Text('Something went wrong'));
+                      return Center(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              left: appPadding, right: appPadding),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Something Went Wrong',
+                                textAlign: TextAlign.center,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Get.to(() => AdminDashboard(),
+                                      transition: Transition.noTransition);
+                                },
+                                child: Text('Return home'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     }
                   } else {
                     return const Center(child: CircularProgressIndicator());
